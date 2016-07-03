@@ -10,15 +10,50 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.bridgelabz.restservice.RestApi;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import dagger.Provides;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class FundooHrLoginActivity extends AppCompatActivity {
-
+    @Inject
+    Retrofit retrofit;
+    TextView txtViewForRetrofit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fundoo_hr_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ((App)getApplication()).getmNetComponent().inject(this);
+        txtViewForRetrofit = (TextView) findViewById(R.id.textViewForRetrofit);
+        //Create a retrofit call object
+        Call<List<Post>> posts = retrofit.create(RestApi.class).getPosts();
+
+        //Enque the call
+        posts.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                //set the response to the textview
+                txtViewForRetrofit.setText(response.body().get(1).getTitle());
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                txtViewForRetrofit.setText(t.toString());
+            }
+        });
+
 
         Button btnNext= (Button) findViewById(R.id.btnNext);
         btnNext.setOnClickListener(new View.OnClickListener() {
