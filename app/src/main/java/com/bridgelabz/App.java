@@ -2,6 +2,7 @@ package com.bridgelabz;
 
 import android.app.Application;
 
+import com.bridgelabz.dagger.component.DaggerNetComponent;
 import com.bridgelabz.dagger.component.NetComponent;
 import com.bridgelabz.dagger.module.AppModule;
 import com.bridgelabz.dagger.module.NetModule;
@@ -20,7 +21,7 @@ public class App extends Application {
         mNetComponent = DaggerNetComponent.builder()
                         .appModule(new AppModule(this))
                         .netModule(new NetModule("http://api.github.com"))
-                        .build;
+                        .build();
     }
 
     public NetComponent getmNetComponent() {

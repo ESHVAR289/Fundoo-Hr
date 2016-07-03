@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
@@ -17,9 +18,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by eshvar289 on 3/7/16.
  */
-
+@Module
 public class NetModule {
+
     String mBaseUrl;
+
+    public NetModule(String mBaseUrl) {
+        this.mBaseUrl = mBaseUrl;
+    }
 
     @Provides
     @Singleton
