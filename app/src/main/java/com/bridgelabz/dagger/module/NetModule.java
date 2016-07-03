@@ -1,4 +1,4 @@
-package com.bridgelabz.dagger.component;
+package com.bridgelabz.dagger.module;
 
 import android.app.Application;
 
