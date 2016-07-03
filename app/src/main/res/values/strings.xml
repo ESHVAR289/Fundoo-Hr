@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Fundoo-Hr</string>
+    <string name="action_settings">Settings</string>
+    <string name="enter_mob_no">Enter Moile no.</string>
+    <string name="pleaseWait">Please wait for One Time Password</string>
+    <string name="sendOtpToYourMobileMsg">We have sent an OTP on your registered mobile no.</string>
+    <string name="enterOTP">Enter OTP</string>>
+</resources>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_fundoo_hr_otp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.bridgelabz.FundooHrOtpActivity">
+
+    <TextView
+        android:text="@string/pleaseWait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textStyle="bold"
+        android:id="@+id/txtPleaseWait"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_fundoo_hr_otp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@+id/activity_fundoo_hr_otp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_fundoo_hr_otp"
+        android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:text="@string/sendOtpToYourMobileMsg"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:id="@+id/txtOtpSentToMobile"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/txtPleaseWait"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_fundoo_hr_otp"
+        android:layout_marginEnd="16dp" />
+
+    <ImageView
+        android:src="@drawable/abc_ic_menu_paste_mtrl_am_alpha"
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        android:id="@+id/imageView2"
+        app:srcCompat="@mipmap/ic_launcher"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_fundoo_hr_otp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtOtpSentToMobile"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:layout_width="217dp"
+        android:layout_height="44dp"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:hint="@string/enterOTP"
+        app:layout_constraintLeft_toRightOf="@+id/imageView2"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtOtpSentToMobile"
+        android:layout_marginTop="8dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_fundoo_hr_otp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:text="Time"
+        android:layout_width="58dp"
+        android:layout_height="16dp"
+        android:id="@+id/txtTime"
+        android:textStyle="normal|bold"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_fundoo_hr_otp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        android:layout_marginTop="48dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_fundoo_hr_otp"
+        android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:text="00:30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textStyle="normal|bold"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_fundoo_hr_otp"
+        app:layout_constraintTop_toBottomOf="@+id/txtTime"
+        android:layout_marginTop="24dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_fundoo_hr_otp" />
+
+    <TextView
+        android:text="Resend OTP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:id="@+id/textView5"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_fundoo_hr_otp"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        android:layout_marginTop="32dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_fundoo_hr_otp" />
+
+    <Button
+        android:text="NEXT"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnNext"
+        android:textStyle="normal|bold"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_fundoo_hr_otp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_fundoo_hr_otp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_fundoo_hr_otp" />
+</android.support.constraint.ConstraintLayout>
