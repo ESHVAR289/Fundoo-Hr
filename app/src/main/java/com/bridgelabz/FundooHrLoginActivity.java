@@ -40,7 +40,7 @@ public class FundooHrLoginActivity extends AppCompatActivity {
         //Create a retrofit call object
         Call<List<Post>> posts = retrofit.create(RestApi.class).getPosts();
 
-        //Enque the call
+        //Enqueue the call
         posts.enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
