@@ -55,31 +55,9 @@ public class FundooHrSearchActivity extends AppCompatActivity implements View.On
         txtTime = (TextView) findViewById(R.id.txtTime);
         etDate = (EditText) findViewById(R.id.etDate);
         etTime = (EditText) findViewById(R.id.etTime);
-        /*imgBtnEditTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calendar=Calendar.getInstance();
-                int hour=calendar.get(Calendar.HOUR_OF_DAY);
-                int minute = calendar.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(FundooHrSearchActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        etTime.setText( selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-            }
-        });
-        imgBtnEditDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });*/
         imgBtnEditDate.setOnClickListener(this);
         imgBtnEditTime.setOnClickListener(this);
+        imgBtnSearch.setOnClickListener(this);
     }
 
     @Override
