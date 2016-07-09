@@ -7,6 +7,9 @@ package com.bridgelabz.model;
 public class MobileAndOtpModel {
     String mobile;
     String otp;
+    String inTime;
+    String outTime;
+    Boolean status;
 
     public MobileAndOtpModel(String mobile) {
         this.mobile = mobile;
