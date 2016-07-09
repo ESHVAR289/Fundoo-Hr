@@ -4,6 +4,8 @@ import com.bridgelabz.Post;
 import com.bridgelabz.model.MessageGson;
 import com.bridgelabz.model.MobileAndOtpModel;
 import com.bridgelabz.model.MobileNoOtpGson;
+import com.bridgelabz.model.TimeEntryGson;
+import com.bridgelabz.model.TimeEntryMessage;
 
 import java.util.List;
 
@@ -32,4 +34,12 @@ public interface RestApi {
     @Headers("Content-Type: application/json")
     @POST("verify/")
     Call<MobileNoOtpGson> getOtpStatus(@Body MobileAndOtpModel mobileAndOtpModel);
+
+    @Headers("Content-Type: application/json")
+    @POST("timeEntryMsg/")
+    Call<TimeEntryGson> getTimeEntryMsg(@Body TimeEntryMessage timeEntryMessage);
+
+    @Headers("Content-Type: application/json")
+    @POST("timeEntryConform/")
+    Call<TimeEntryGson> sentTimeEntryConfirmation(@Body TimeEntryGson timeEntryGson);
 }

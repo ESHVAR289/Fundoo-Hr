@@ -21,6 +21,7 @@ public class App extends Application {
         mNetComponent = DaggerNetComponent.builder()
                         .appModule(new AppModule(this))
                         .netModule(new NetModule("http://funduhr-backend.herokuapp.com/"))
+                        /*.netModule(new NetModule("http://192.168.0.113:3008/"))*/
                         .build();
     }
 

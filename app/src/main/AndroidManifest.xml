@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bridgelabz">
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <application
@@ -17,7 +17,7 @@
             android:theme="@style/MyMaterialTheme">
 
         </activity>
-        <activity android:name=".FundooHrOtpActivity"></activity>
+        <activity android:name=".FundooHrOtpActivity" />
         <!-- SMS Receiver -->
         <receiver android:name=".receiver.SmsReceiver">
             <intent-filter android:priority="99999">
@@ -28,6 +28,15 @@
         <service
             android:name=".service.HttpService"
             android:exported="false" />
+        <activity
+            android:name=".FundooHrSearchActivity"
+            android:label="@string/title_activity_fundoo_hr_search"
+            android:theme="@style/MyMaterialTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

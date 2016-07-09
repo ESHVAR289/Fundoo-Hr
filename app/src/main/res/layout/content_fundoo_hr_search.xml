@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_fundoo_hr_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.bridgelabz.FundooHrSearchActivity"
+    tools:showIn="@layout/activity_fundoo_hr_search">
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:inputType="textPersonName"
+        android:editable="false"
+        android:focusable="false"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/etTime"
+        android:hint="Time"
+        android:selectAllOnFocus="true"
+        app:layout_constraintLeft_toLeftOf="@+id/content_fundoo_hr_search"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/etDate"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toLeftOf="@+id/imageButton4"
+        android:layout_marginEnd="9dp"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+    <EditText
+        android:layout_width="281dp"
+        android:layout_height="55dp"
+        android:id="@+id/etSearch"
+        android:hint="Search"
+        app:layout_constraintLeft_toLeftOf="@+id/content_fundoo_hr_search"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@+id/content_fundoo_hr_search"
+        android:layout_marginTop="152dp" />
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:id="@+id/imgBtnSearch"
+        app:srcCompat="@android:drawable/ic_search_category_default"
+        app:layout_constraintLeft_toRightOf="@+id/etSearch"
+        android:layout_marginStart="7dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="@+id/content_fundoo_hr_search"
+        android:layout_marginTop="152dp"
+        app:layout_constraintRight_toRightOf="@+id/content_fundoo_hr_search"
+        android:layout_marginEnd="15dp"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintHorizontal_bias="0.18" />
+
+    <TextView
+        android:text="Date"
+        android:layout_width="292dp"
+        android:layout_height="38dp"
+        android:id="@+id/txtJson"
+        app:layout_constraintLeft_toLeftOf="@+id/content_fundoo_hr_search"
+        app:layout_constraintTop_toBottomOf="@+id/etSearch"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:text="Time"
+        android:layout_width="292dp"
+        android:layout_height="52dp"
+        android:id="@+id/txtTime"
+        app:layout_constraintLeft_toLeftOf="@+id/content_fundoo_hr_search"
+        app:layout_constraintTop_toBottomOf="@+id/txtJson"
+        android:layout_marginTop="8dp" />
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imageButton"
+        app:layout_constraintLeft_toRightOf="@+id/txtJson"
+        android:layout_marginStart="8dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/imgBtnSearch"
+        android:layout_marginTop="24dp"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/content_fundoo_hr_search"
+        android:layout_marginEnd="16dp"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton2"
+        android:layout_marginBottom="12dp"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:editable="false"
+        android:focusable="false"
+        android:ems="10"
+        android:id="@+id/etDate"
+        android:hint="Date"
+        app:layout_constraintLeft_toLeftOf="@+id/content_fundoo_hr_search"
+        android:layout_marginStart="8dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="@+id/imageButton3"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toLeftOf="@+id/imageButton"
+        android:layout_marginEnd="8dp"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
+        tools:layout_constraintBottom_creator="1" />
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imageButton2"
+        app:layout_constraintLeft_toRightOf="@+id/txtTime"
+        android:layout_marginStart="6dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/txtJson"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/content_fundoo_hr_search"
+        android:layout_marginEnd="15dp"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTime"
+        android:layout_marginBottom="7dp"
+        tools:layout_constraintBottom_creridgeitator="1" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imageButton3"
+        app:layout_constraintLeft_toRightOf="@+id/etDate"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+        android:layout_marginTop="24dp"
+        app:layout_constraintRight_toRightOf="@+id/content_fundoo_hr_search"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintHorizontal_bias="0.63" />
+
+    <ImageButton
+        android:layout_width="67dp"
+        android:layout_height="39dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imageButton4"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="@+id/content_fundoo_hr_search"
+        android:layout_marginEnd="16dp" />
+
+</android.support.constraint.ConstraintLayout>
