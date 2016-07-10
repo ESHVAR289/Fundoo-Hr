@@ -48,18 +48,18 @@ public class FundooHrToolbarSearch extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_fundoo_hr_login,menu);
+        getMenuInflater().inflate(R.menu.menu_fundoo_hr_login, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
-            case android.R.id.home  :
+        switch (id) {
+            case android.R.id.home:
                 finish();
                 break;
-            case R.id.action_search :
+            case R.id.action_search:
                 loadToolBarSearch();
                 break;
         }
@@ -67,9 +67,9 @@ public class FundooHrToolbarSearch extends AppCompatActivity {
     }
 
     private void loadToolBarSearch() {
-        ArrayList<String> countryStored = SharedPreference.loadList(FundooHrToolbarSearch.this, Utils.PREFS_NAME,Utils.KEY_COUNTRIES);
+        ArrayList<String> countryStored = SharedPreference.loadList(FundooHrToolbarSearch.this, Utils.PREFS_NAME, Utils.KEY_COUNTRIES);
 
-        View view = FundooHrToolbarSearch.this.getLayoutInflater().inflate(R.layout.view_toolbar_search,null);
+        View view = FundooHrToolbarSearch.this.getLayoutInflater().inflate(R.layout.view_toolbar_search, null);
         LinearLayout parentToolbarSearch = (LinearLayout) view.findViewById(R.id.parent_toolbar_search);
         ImageView imgToolBack = (ImageView) view.findViewById(R.id.img_tool_back);
         final EditText editToolSearch = (EditText) view.findViewById(R.id.edt_tool_search);
@@ -81,17 +81,17 @@ public class FundooHrToolbarSearch extends AppCompatActivity {
 
         editToolSearch.setHint("Search your country");
 
-        final Dialog toolbarSearchDialog = new Dialog(FundooHrToolbarSearch.this,R.style.MyMaterialTheme);
+        final Dialog toolbarSearchDialog = new Dialog(FundooHrToolbarSearch.this, R.style.MyMaterialTheme);
         toolbarSearchDialog.setContentView(view);
         toolbarSearchDialog.setCancelable(false);
-        toolbarSearchDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+        toolbarSearchDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         toolbarSearchDialog.getWindow().setGravity(Gravity.BOTTOM);
         toolbarSearchDialog.show();
 
         toolbarSearchDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
-        countryStored = (countryStored !=null && countryStored.size() > 0) ?  countryStored : new ArrayList<String>();
-        final SearchAdapter searchAdapter = new SearchAdapter(FundooHrToolbarSearch.this,countryStored,false);
+        countryStored = (countryStored != null && countryStored.size() > 0) ? countryStored : new ArrayList<String>();
+        final SearchAdapter searchAdapter = new SearchAdapter(FundooHrToolbarSearch.this, countryStored, false);
 
         listSearch.setVisibility(View.VISIBLE);
         listSearch.setAdapter(searchAdapter);
@@ -100,7 +100,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String country = String.valueOf(adapterView.getItemAtPosition(i));
-                SharedPreference.addList(FundooHrToolbarSearch.this,Utils.PREFS_NAME,Utils.KEY_COUNTRIES,country);
+                SharedPreference.addList(FundooHrToolbarSearch.this, Utils.PREFS_NAME, Utils.KEY_COUNTRIES, country);
                 editToolSearch.setText(country);
                 listSearch.setVisibility(View.GONE);
             }
@@ -112,29 +112,29 @@ public class FundooHrToolbarSearch extends AppCompatActivity {
                 String[] country = FundooHrToolbarSearch.this.getResources().getStringArray(R.array.countries_array);
                 mCountries = new ArrayList<String>(Arrays.asList(country));
                 listSearch.setVisibility(View.VISIBLE);
-                searchAdapter.updateList(mCountries,true);
+                searchAdapter.updateList(mCountries, true);
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 ArrayList<String> filterList = new ArrayList<String>();
                 boolean isNodata = false;
-                if (charSequence.length() >0){
-                    for (int i=0; i<mCountries.size(); i++){
-                        if (mCountries.get(i).toLowerCase().startsWith(charSequence.toString().trim().toLowerCase())){
-                           filterList.add(mCountries.get(i));
+                if (charSequence.length() > 0) {
+                    for (int i = 0; i < mCountries.size(); i++) {
+                        if (mCountries.get(i).toLowerCase().startsWith(charSequence.toString().trim().toLowerCase())) {
+                            filterList.add(mCountries.get(i));
 
                             listSearch.setVisibility(View.VISIBLE);
-                            searchAdapter.updateList(filterList,true);
+                            searchAdapter.updateList(filterList, true);
                             isNodata = true;
                         }
                     }
-                    if (!isNodata){
+                    if (!isNodata) {
                         listSearch.setVisibility(View.GONE);
                         txtEmpty.setVisibility(View.VISIBLE);
                         txtEmpty.setText("No data found");
                     }
-                }else {
+                } else {
                     listSearch.setVisibility(View.GONE);
                     txtEmpty.setVisibility(View.GONE);
                 }
@@ -164,7 +164,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity {
     private void toolBarData() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("FundooHr");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.blue));
         setSupportActionBar(toolbar);
     }
 }

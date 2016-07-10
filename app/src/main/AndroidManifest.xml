@@ -3,7 +3,7 @@
     package="com.bridgelabz">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
 
@@ -17,7 +17,13 @@
         <activity
             android:name=".FundooHrLoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/MyMaterialTheme"></activity>
+            android:theme="@style/MyMaterialTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".FundooHrOtpActivity" />
         <!-- SMS Receiver -->
         <receiver android:name=".receiver.SmsReceiver">
@@ -33,15 +39,9 @@
         <activity
             android:name=".FundooHrSearchActivity"
             android:label="@string/title_activity_fundoo_hr_search"
-            android:theme="@style/MyMaterialTheme">
-        </activity>
-        <activity android:name=".FundooHrToolbarSearch"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/MyMaterialTheme"></activity>
+        <activity android:name=".FundooHrToolbarSearch">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
