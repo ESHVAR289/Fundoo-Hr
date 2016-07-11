@@ -36,7 +36,7 @@ public class FundooHrSearchActivity extends AppCompatActivity implements View.On
     ImageButton imgBtnSearch, imgBtnTxtEditDate, imgBtnTxtEditTime, imgBtnEditDate, imgBtnEditTime;
     TextView txtJson, txtTime;
     Calendar calendar;
-    private int mYear, mMonth, mDay, mHour, mMinute,mSeconds;
+    private int mYear, mMonth, mDay, mHour, mMinute, mSeconds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,48 +63,39 @@ public class FundooHrSearchActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View view) {
         if (view == imgBtnEditDate) {
-
             // Get Current Date
             final Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
-
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
-
                             etDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
         }
         if (view == imgBtnEditTime) {
-
             // Get Current Time
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
             mSeconds = c.get(Calendar.SECOND);
-
             // Launch Time Picker Dialog
             TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                     new TimePickerDialog.OnTimeSetListener() {
-
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
-
-                            etTime.setText(hourOfDay + ":" + minute+ ":"+mSeconds);
+                            etTime.setText(hourOfDay + ":" + minute + ":" + mSeconds);
                         }
                     }, mHour, mMinute, false);
             timePickerDialog.show();
-        }if (view == imgBtnSearch){
+        }
+        if (view == imgBtnSearch) {
             String mobile_no = "+919923911289"/*getIntent().getStringExtra("mobile")*/;
             String search_text = etSearch.getText().toString();
             Call<TimeEntryGson> timeEntryResponse = retrofit.create(RestApi.class).getTimeEntryMsg(new TimeEntryMessage(mobile_no, search_text));

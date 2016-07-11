@@ -17,9 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bridgelabz.adapter.SearchAdapter;
 import com.bridgelabz.shared_preference.SharedPreference;
+import com.bridgelabz.util.GpsLocationTracker;
 import com.bridgelabz.util.Utils;
 
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ import java.util.Arrays;
 public class FundooHrToolbarSearch extends AppCompatActivity {
     Toolbar toolbar;
     private ArrayList<String> mCountries;
+    double latitude,longitude;
+    GpsLocationTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,20 @@ public class FundooHrToolbarSearch extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        gps=new GpsLocationTracker(this);
+        if(gps.canGetLocation()){
+
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
+
+            // \n is for new line
+            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gps.showSettingsAlert();
+        }
     }
 
     @Override

@@ -45,11 +45,9 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
 
         etMobileNo = (EditText) findViewById(R.id.editTextPhone);
         btnSendOtp = (AppCompatButton) findViewById(R.id.buttonRegister);
-
         btnNext = (Button) findViewById(R.id.btnNext);
 
         btnSendOtp.setOnClickListener(this);
-
     }
 
     @Override
@@ -109,7 +107,6 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
                             confirmOtp();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<MobileNoOtpGson> call, Throwable t) {
                         Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -130,12 +127,11 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
             mobileNoOtpGson.enqueue(new Callback<MobileNoOtpGson>() {
                 @Override
                 public void onResponse(Call<MobileNoOtpGson> call, Response<MobileNoOtpGson> response) {
-                    if (response.body().getStatus()) {
+                    if (response.body().getStatus()){
                         progressDialog.dismiss();
                         confirmOtp();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<MobileNoOtpGson> call, Throwable t) {
                     Toast.makeText(getApplicationContext(),"Something happens wrong ! Please call to our contact person",Toast.LENGTH_LONG).show();
