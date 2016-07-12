@@ -35,7 +35,6 @@ public class FundooHrSearchActivity extends AppCompatActivity implements View.On
     EditText etSearch, etDate, etTime, etEditDate, etEditTime;
     ImageButton imgBtnSearch, imgBtnTxtEditDate, imgBtnTxtEditTime, imgBtnEditDate, imgBtnEditTime;
     TextView txtJson, txtTime;
-    Calendar calendar;
     private int mYear, mMonth, mDay, mHour, mMinute, mSeconds;
 
     @Override

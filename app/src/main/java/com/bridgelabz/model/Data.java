@@ -21,8 +21,15 @@ public class Data {
     @Expose
     private String totalTime;
 
+    public Data(String userId, String inTime, String outTime, String totalTime) {
+        this.userId = userId;
+        this.inTime = inTime;
+        this.outTime = outTime;
+        this.totalTime = totalTime;
+    }
+
     /**
-     * 
+     *
      * @return
      *     The userId
      */
@@ -31,7 +38,7 @@ public class Data {
     }
 
     /**
-     * 
+     *
      * @param userId
      *     The userId
      */
@@ -40,7 +47,7 @@ public class Data {
     }
 
     /**
-     * 
+     *
      * @return
      *     The inTime
      */
@@ -49,7 +56,7 @@ public class Data {
     }
 
     /**
-     * 
+     *
      * @param inTime
      *     The inTime
      */
@@ -58,7 +65,7 @@ public class Data {
     }
 
     /**
-     * 
+     *
      * @return
      *     The outTime
      */
@@ -67,7 +74,7 @@ public class Data {
     }
 
     /**
-     * 
+     *
      * @param outTime
      *     The outTime
      */
@@ -76,7 +83,7 @@ public class Data {
     }
 
     /**
-     * 
+     *
      * @return
      *     The totalTime
      */
@@ -85,7 +92,7 @@ public class Data {
     }
 
     /**
-     * 
+     *
      * @param totalTime
      *     The totalTime
      */

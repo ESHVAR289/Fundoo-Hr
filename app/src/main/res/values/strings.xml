@@ -19,7 +19,14 @@
     <string name="lbl_submit">SUBMIT</string>
     <string name="title_activity_fundoo_hr_search">FundooHrSearchActivity</string>
 
-    <!--String array for countru -->
+    <!--String array for messages -->
+    <string-array name="saved_messages">
+        <item>i am in office now</item>
+        <item>i am in office</item>
+        <item>i left the office</item>
+        <item>i am leaving now</item>
+    </string-array>
+    <!--String array for country -->
     <string-array name="countries_array">
         <item>None</item>
         <item>Afghanistan</item>

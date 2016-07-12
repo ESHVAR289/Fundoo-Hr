@@ -1,6 +1,7 @@
 package com.bridgelabz.restservice;
 
 import com.bridgelabz.Post;
+import com.bridgelabz.model.MessageData;
 import com.bridgelabz.model.MessageGson;
 import com.bridgelabz.model.MobileAndOtpModel;
 import com.bridgelabz.model.MobileNoOtpGson;
@@ -41,5 +42,5 @@ public interface RestApi {
 
     @Headers("Content-Type: application/json")
     @POST("timeEntryConform/")
-    Call<TimeEntryGson> sentTimeEntryConfirmation(@Body TimeEntryGson timeEntryGson);
+    Call<MessageData> sentTimeEntryConfirmation(@Body TimeEntryGson timeEntryGson);
 }

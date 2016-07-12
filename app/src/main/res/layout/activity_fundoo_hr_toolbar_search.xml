@@ -5,4 +5,116 @@
     android:background="@color/chrome_grey"
     android:orientation="vertical">
     <include layout="@layout/include_toolbar" />
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etSearchMsg"
+            style="@style/Widget.AppCompat.AutoCompleteTextView"
+            android:singleLine="true"
+            android:onClick="etSearchClick"
+            android:hint="attendance search"
+            android:inputType="none"
+            android:editable="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/txtEditDateTime">
+        <TextView
+            android:text="Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtWantToEdit"
+            android:layout_alignStart="@+id/txtWantToEdit"
+            android:layout_marginTop="71dp"
+            android:id="@+id/txtDate" />
+        <TextView
+            android:text="Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDate"
+            android:layout_alignStart="@+id/txtDate"
+            android:layout_marginTop="55dp"
+            android:id="@+id/txtTime" />
+        <Switch
+            android:text="Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switchEdtTimeDate"
+            android:layout_alignTop="@+id/txtWantToEdit"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:text="Want to edit Date and Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="39dp"
+            android:id="@+id/txtWantToEdit"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/etEtDate"
+            android:hint="current date"
+            android:layout_alignBaseline="@+id/txtDate"
+            android:layout_alignBottom="@+id/txtDate"
+            android:layout_alignStart="@+id/btnConfirm"
+            android:fitsSystemWindows="false"
+            android:editable="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/etEtTime"
+            android:hint="current time"
+            android:editable="false"
+            android:layout_alignBottom="@+id/txtTime"
+            android:layout_alignStart="@+id/etEtDate" />
+
+        <Button
+            android:text="CONFIRM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="67dp"
+            android:id="@+id/btnConfirm"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@color/chrome_grey"/>
+    <ListView
+        android:id="@+id/list_msg_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:scrollbars="vertical"
+        android:divider="@android:color/transparent"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/txt_msg_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secondary_text"
+        android:background="@color/white"
+        android:padding="20dp"
+        android:gravity="center"
+        android:visibility="gone"/>
 </LinearLayout>

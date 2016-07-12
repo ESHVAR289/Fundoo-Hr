@@ -12,8 +12,15 @@ public class TimeEntryGson {
     @Expose
     private Data data;
 
+    private boolean status;
+
+    public TimeEntryGson(Data data, boolean status) {
+        this.data = data;
+        this.status = status;
+    }
+
     /**
-     * 
+     *
      * @return
      *     The data
      */
@@ -22,12 +29,20 @@ public class TimeEntryGson {
     }
 
     /**
-     * 
+     *
      * @param data
      *     The data
      */
     public void setData(Data data) {
         this.data = data;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
 }
