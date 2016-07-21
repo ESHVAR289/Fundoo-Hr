@@ -1,12 +1,13 @@
 
 package com.bridgelabz.model;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import javax.annotation.Generated;
+
 @Generated("org.jsonschema2pojo")
-public class Data {
+public class TimeEntryResponseDataModel {
 
     @SerializedName("userId")
     @Expose
@@ -21,83 +22,63 @@ public class Data {
     @Expose
     private String totalTime;
 
-    public Data(String userId, String inTime, String outTime, String totalTime) {
+    @SerializedName("type")
+    @Expose
+    private String attendance;
+
+    public TimeEntryResponseDataModel(String userId, String inTime, String outTime, String totalTime, String attendance) {
         this.userId = userId;
         this.inTime = inTime;
         this.outTime = outTime;
         this.totalTime = totalTime;
+        this.attendance = attendance;
     }
 
-    /**
-     *
-     * @return
-     *     The userId
-     */
+    public TimeEntryResponseDataModel(String userId, String inTime, String outTime, String totalTime) {
+
+    }
+
     public String getUserId() {
         return userId;
     }
 
-    /**
-     *
-     * @param userId
-     *     The userId
-     */
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    /**
-     *
-     * @return
-     *     The inTime
-     */
     public String getInTime() {
         return inTime;
     }
 
-    /**
-     *
-     * @param inTime
-     *     The inTime
-     */
+
     public void setInTime(String inTime) {
         this.inTime = inTime;
     }
 
-    /**
-     *
-     * @return
-     *     The outTime
-     */
     public String getOutTime() {
         return outTime;
     }
 
-    /**
-     *
-     * @param outTime
-     *     The outTime
-     */
+
     public void setOutTime(String outTime) {
         this.outTime = outTime;
     }
 
-    /**
-     *
-     * @return
-     *     The totalTime
-     */
     public String getTotalTime() {
         return totalTime;
     }
 
-    /**
-     *
-     * @param totalTime
-     *     The totalTime
-     */
     public void setTotalTime(String totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public String getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(String attendance) {
+        this.attendance = attendance;
     }
 
 }

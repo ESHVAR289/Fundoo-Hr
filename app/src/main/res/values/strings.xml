@@ -25,6 +25,7 @@
         <item>i am in office</item>
         <item>i left the office</item>
         <item>i am leaving now</item>
+        <item>give me attendance log</item>
     </string-array>
     <!--String array for country -->
     <string-array name="countries_array">

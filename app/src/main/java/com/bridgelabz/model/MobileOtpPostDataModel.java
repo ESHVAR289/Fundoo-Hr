@@ -4,15 +4,15 @@ package com.bridgelabz.model;
  * Created by bridgeit007 on 1/7/16.
  */
 
-public class MobileAndOtpModel {
+public class MobileOtpPostDataModel {
     String mobile;
     String otp;
 
-    public MobileAndOtpModel(String mobile) {
+    public MobileOtpPostDataModel(String mobile) {
         this.mobile = mobile;
     }
 
-    public MobileAndOtpModel(String mobile, String otp) {
+    public MobileOtpPostDataModel(String mobile, String otp) {
         this.mobile = mobile;
         this.otp = otp;
     }

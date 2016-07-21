@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.bridgelabz.FundooHrLoginActivity;
-import com.bridgelabz.model.MobileAndOtpModel;
-import com.bridgelabz.model.MobileNoOtpGson;
+import com.bridgelabz.view.FundooHrLoginActivity;
+import com.bridgelabz.model.MobileOtpPostDataModel;
+import com.bridgelabz.model.MobileNoOtpResponse;
 import com.bridgelabz.restservice.RestApi;
 
 import org.json.JSONException;
@@ -43,10 +43,10 @@ public class HttpService extends IntentService {
     }
 
     private void verifyOtp(final String otp, final String mobile) {
-        Call<MobileNoOtpGson> otpGson = retrofit.create(RestApi.class).getOtpStatus(new MobileAndOtpModel(mobile, otp));
-        otpGson.enqueue(new Callback<MobileNoOtpGson>() {
+        Call<MobileNoOtpResponse> otpGson = retrofit.create(RestApi.class).getOtpStatus(new MobileOtpPostDataModel(mobile, otp));
+        otpGson.enqueue(new Callback<MobileNoOtpResponse>() {
             @Override
-            public void onResponse(Call<MobileNoOtpGson> call, Response<MobileNoOtpGson> response) {
+            public void onResponse(Call<MobileNoOtpResponse> call, Response<MobileNoOtpResponse> response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response.body().toString());
                     Log.i(TAG, "onResponse: " + response.body().toString());
@@ -60,7 +60,7 @@ public class HttpService extends IntentService {
             }
 
             @Override
-            public void onFailure(Call<MobileNoOtpGson> call, Throwable t) {
+            public void onFailure(Call<MobileNoOtpResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
             }
         });

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/chrome_grey"
+    android:background="@color/bluegrey"
     android:orientation="vertical">
     <include layout="@layout/include_toolbar" />
     <android.support.design.widget.TextInputLayout
@@ -17,30 +17,18 @@
             android:singleLine="true"
             android:onClick="etSearchClick"
             android:hint="attendance search"
-            android:inputType="none"
-            android:editable="true" />
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:editable="true"
+            android:textStyle="normal|bold"
+            android:background="@drawable/edit_text_style" />
     </android.support.design.widget.TextInputLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/txtEditDateTime">
-        <TextView
-            android:text="Date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtWantToEdit"
-            android:layout_alignStart="@+id/txtWantToEdit"
-            android:layout_marginTop="71dp"
-            android:id="@+id/txtDate" />
-        <TextView
-            android:text="Time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtDate"
-            android:layout_alignStart="@+id/txtDate"
-            android:layout_marginTop="55dp"
-            android:id="@+id/txtTime" />
+
         <Switch
             android:text="Switch"
             android:layout_width="wrap_content"
@@ -48,18 +36,21 @@
             android:id="@+id/switchEdtTimeDate"
             android:layout_alignTop="@+id/txtWantToEdit"
             android:layout_alignParentEnd="true"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
         <TextView
-            android:text="Want to edit Date and Time"
+            android:text="Edit Date and Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="29dp"
-            android:layout_marginTop="39dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="13dp"
+            android:textAppearance="?android:textAppearanceLarge"
             android:id="@+id/txtWantToEdit"
+            android:visibility="visible"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:visibility="invisible"/>
+            android:layout_alignEnd="@+id/btnConfirm" />
+
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,32 +58,97 @@
             android:ems="10"
             android:id="@+id/etEtDate"
             android:hint="current date"
-            android:layout_alignBaseline="@+id/txtDate"
-            android:layout_alignBottom="@+id/txtDate"
-            android:layout_alignStart="@+id/btnConfirm"
             android:fitsSystemWindows="false"
-            android:editable="true" />
+            android:editable="true"
+            android:textStyle="normal|bold"
+            android:background="@drawable/edit_text_style"
+            android:layout_alignTop="@+id/txtDate"
+            android:layout_alignStart="@+id/btnConfirm"
+            android:layout_toStartOf="@+id/switchEdtTimeDate" />
+
+        <TextView
+            android:text="Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:id="@+id/txtDate"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textStyle="normal|bold"
+            android:layout_below="@+id/switchEdtTimeDate"
+            android:layout_alignStart="@+id/txtWantToEdit"
+            android:layout_marginStart="17dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerViewAttendance"
+            android:layout_marginTop="11dp"
+            android:layout_below="@+id/btnConfirm"
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="date"
             android:ems="10"
-            android:id="@+id/etEtTime"
-            android:hint="current time"
+            android:id="@+id/etEdtOutTime"
+            android:hint="current out time"
             android:editable="false"
-            android:layout_alignBottom="@+id/txtTime"
-            android:layout_alignStart="@+id/etEtDate" />
+            android:textStyle="normal|bold"
+            android:background="@drawable/edit_text_style"
+            android:layout_alignTop="@+id/txtOutTime"
+            android:layout_alignStart="@+id/btnConfirm"
+            android:layout_alignEnd="@+id/etEdtInTime"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:text="In-Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:id="@+id/txtInTime"
+            android:textStyle="normal|bold"
+            android:layout_marginTop="14dp"
+            android:layout_below="@+id/txtDate"
+            android:layout_alignStart="@+id/txtDate" />
+
+        <TextView
+            android:text="Out-Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:id="@+id/txtOutTime"
+            android:textStyle="normal|bold"
+            android:layout_marginTop="17dp"
+            android:layout_below="@+id/txtInTime"
+            android:layout_alignStart="@+id/txtInTime"
+            android:visibility="invisible"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/etEdtInTime"
+            android:hint="current in time"
+            android:editable="false"
+            android:textStyle="normal|bold"
+            android:background="@drawable/edit_text_style"
+            android:layout_alignTop="@+id/txtInTime"
+            android:layout_alignStart="@+id/etEtDate"
+            android:layout_alignEnd="@+id/etEtDate" />
 
         <Button
             android:text="CONFIRM"
+            android:textAppearance="?android:textAppearanceLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="67dp"
             android:id="@+id/btnConfirm"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:visibility="invisible"/>
+            android:visibility="visible"
+            android:layout_marginTop="18dp"
+            android:layout_below="@+id/txtOutTime"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
     <View
@@ -117,4 +173,6 @@
         android:padding="20dp"
         android:gravity="center"
         android:visibility="gone"/>
+
+
 </LinearLayout>

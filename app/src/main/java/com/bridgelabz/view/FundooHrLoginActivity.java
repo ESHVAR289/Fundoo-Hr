@@ -1,4 +1,4 @@
-package com.bridgelabz;
+package com.bridgelabz.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,8 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bridgelabz.model.MobileAndOtpModel;
-import com.bridgelabz.model.MobileNoOtpGson;
+import com.bridgelabz.util.App;
+import com.bridgelabz.R;
+import com.bridgelabz.model.MobileOtpPostDataModel;
+import com.bridgelabz.model.MobileNoOtpResponse;
 import com.bridgelabz.restservice.RestApi;
 
 import javax.inject.Inject;
@@ -94,10 +96,10 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
 
                 //Getting the user entered otp from edittext
                 final String otp = etConfirmOtp.getText().toString().trim();
-                Call<MobileNoOtpGson> otpGson = retrofit.create(RestApi.class).getOtpStatus(new MobileAndOtpModel(mo_number, etConfirmOtp.getText().toString().trim()));
-                otpGson.enqueue(new Callback<MobileNoOtpGson>() {
+                Call<MobileNoOtpResponse> otpGson = retrofit.create(RestApi.class).getOtpStatus(new MobileOtpPostDataModel(mo_number, etConfirmOtp.getText().toString().trim()));
+                otpGson.enqueue(new Callback<MobileNoOtpResponse>() {
                     @Override
-                    public void onResponse(Call<MobileNoOtpGson> call, Response<MobileNoOtpGson> response) {
+                    public void onResponse(Call<MobileNoOtpResponse> call, Response<MobileNoOtpResponse> response) {
                         if (response.body().getStatus()) {
                             loading.dismiss();
                             startActivity(new Intent(getApplicationContext(), FundooHrToolbarSearch.class));
@@ -108,7 +110,7 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
                         }
                     }
                     @Override
-                    public void onFailure(Call<MobileNoOtpGson> call, Throwable t) {
+                    public void onFailure(Call<MobileNoOtpResponse> call, Throwable t) {
                         Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -123,17 +125,17 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
         mo_number = "+91" + etMobileNo.getText().toString();
         if (mo_number.length() < 10 || mo_number.length() > 13 || mo_number.matches(regexString)) {
 
-            Call<MobileNoOtpGson> mobileNoOtpGson = retrofit.create(RestApi.class).getMobileNoStatus(new MobileAndOtpModel(mo_number));
-            mobileNoOtpGson.enqueue(new Callback<MobileNoOtpGson>() {
+            Call<MobileNoOtpResponse> mobileNoOtpGson = retrofit.create(RestApi.class).getMobileNoStatus(new MobileOtpPostDataModel(mo_number));
+            mobileNoOtpGson.enqueue(new Callback<MobileNoOtpResponse>() {
                 @Override
-                public void onResponse(Call<MobileNoOtpGson> call, Response<MobileNoOtpGson> response) {
+                public void onResponse(Call<MobileNoOtpResponse> call, Response<MobileNoOtpResponse> response) {
                     if (response.body().getStatus()){
                         progressDialog.dismiss();
                         confirmOtp();
                     }
                 }
                 @Override
-                public void onFailure(Call<MobileNoOtpGson> call, Throwable t) {
+                public void onFailure(Call<MobileNoOtpResponse> call, Throwable t) {
                     Toast.makeText(getApplicationContext(),"Something happens wrong ! Please call to our contact person",Toast.LENGTH_LONG).show();
                 }
             });

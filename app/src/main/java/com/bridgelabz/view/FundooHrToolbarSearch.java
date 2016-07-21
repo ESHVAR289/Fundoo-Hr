@@ -1,13 +1,17 @@
-package com.bridgelabz;
+package com.bridgelabz.view;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,11 +19,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -27,21 +31,29 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bridgelabz.R;
+import com.bridgelabz.adapter.AttendaceRecyclerViewAdapter;
 import com.bridgelabz.adapter.SearchAdapter;
-import com.bridgelabz.model.Data;
+import com.bridgelabz.model.AttendanceDataModel;
+import com.bridgelabz.model.TimeEntryResponseDataModel;
 import com.bridgelabz.model.MessageData;
-import com.bridgelabz.model.TimeEntryGson;
-import com.bridgelabz.model.TimeEntryMessage;
+import com.bridgelabz.model.TimeEntryResponse;
+import com.bridgelabz.model.TimeEntryPostMessageModel;
 import com.bridgelabz.restservice.RestApi;
 import com.bridgelabz.shared_preference.SharedPreference;
+import com.bridgelabz.util.App;
 import com.bridgelabz.util.DateFormater;
 import com.bridgelabz.util.GpsLocationTracker;
 import com.bridgelabz.util.Utils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -50,24 +62,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnClickListener,View.OnFocusChangeListener,TextView.OnEditorActionListener{
+public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
+    private static final String TAG = FundooHrToolbarSearch.class.getSimpleName();
     @Inject
     Retrofit retrofit;
 
     Toolbar toolbar;
     private ArrayList<String> mCountries;
     private ArrayList<String> mMessages;
-    double latitude,longitude;
+    double latitude, longitude;
     boolean updateStatus;
     GpsLocationTracker gps;
-    EditText editToolSearch,etSearchMsg, etEdtDate,etEdtTime;
+    EditText editToolSearch, etSearchMsg, etEdtDate, etEdtInTime, etEdtOutTime;
     Button btnConfirm;
     ListView listView;
     View editTextView;
     Switch aSwitch;
-    TimeEntryGson gsonData;
-    TextView txtViewEditMsg,txtMsgEmpty;
+    TimeEntryResponse gsonData;
+    AttendanceDataModel dataModel;
+    TextView txtViewEditMsg, txtMsgEmpty, txtOutTime;
     private int mYear, mMonth, mDay, mHour, mMinute, mSeconds;
+    private RecyclerView recyclerView;
+    ArrayList<AttendanceDataModel> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,60 +95,90 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
         setOnClickListenerToComponent();
         setFocusListenerToComponent();
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        etSearchMsg = (EditText) findViewById(R.id.etSearchMsg);
+
+        etSearchMsg.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEND) {
+                    sendEditTextDataToRest();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(etSearchMsg.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
-    public void initializeComponent(){
+
+    public void initializeComponent() {
         editTextView = FundooHrToolbarSearch.this.getLayoutInflater().inflate(R.layout.activity_fundoo_hr_toolbar_search, null);
-        etSearchMsg = (EditText) editTextView.findViewById(R.id.etSearchMsg);
+        /*etSearchMsg = (EditText) editTextView.findViewById(R.id.etSearchMsg);*/
         listView = (ListView) editTextView.findViewById(R.id.list_msg_search);
         txtMsgEmpty = (TextView) editTextView.findViewById(R.id.txt_msg_empty);
         etEdtDate = (EditText) findViewById(R.id.etEtDate);
-        etEdtTime = (EditText) findViewById(R.id.etEtTime);
+        etEdtInTime = (EditText) findViewById(R.id.etEdtInTime);
+        etEdtOutTime = (EditText) findViewById(R.id.etEdtOutTime);
+        txtOutTime = (TextView) findViewById(R.id.txtOutTime);
         btnConfirm = (Button) findViewById(R.id.btnConfirm);
         aSwitch = (Switch) findViewById(R.id.switchEdtTimeDate);
         txtViewEditMsg = (TextView) findViewById(R.id.txtWantToEdit);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewAttendance);
     }
 
-    public void setOnClickListenerToComponent(){
+    public void setOnClickListenerToComponent() {
         etEdtDate.setOnClickListener(this);
-        etEdtTime.setOnClickListener(this);
+        etEdtInTime.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
 
         //etSearchMsg.setOnClickListener(this);
-    }public void setFocusListenerToComponent(){
-        etEdtDate.setOnFocusChangeListener(this);
-        etEdtTime.setOnFocusChangeListener(this);
-        etSearchMsg.setOnFocusChangeListener(this);
     }
 
-    public void etSearchClick(View view){
-        Toast.makeText(FundooHrToolbarSearch.this,"Clicked",Toast.LENGTH_LONG).show();
-        loadEditTextSearch();
+    public void setFocusListenerToComponent() {
+        etEdtDate.setOnFocusChangeListener(this);
+        etEdtInTime.setOnFocusChangeListener(this);
+        // etSearchMsg.setOnFocusChangeListener(this);
     }
+
+    public void etSearchClick(View view) {
+        //Toast.makeText(FundooHrToolbarSearch.this,"Clicked",Toast.LENGTH_LONG).show();
+        //sendEditTextDataToRest();
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
-            case R.id.etEtDate :
-               // Toast.makeText(FundooHrToolbarSearch.this,"Clicked",Toast.LENGTH_LONG).show();
-                getCurrentDate();
-                break;
-            case R.id.etEtTime :
+        switch (id) {
+            /*case R.id.etSearchMsg:
                 Toast.makeText(FundooHrToolbarSearch.this,"Clicked",Toast.LENGTH_LONG).show();
-                getCurrentTime();
+                loadEditTextSearch();*/
+            case R.id.etEtDate:
+                // Toast.makeText(FundooHrToolbarSearch.this,"Clicked",Toast.LENGTH_LONG).show();
+                // getCurrentDate();
                 break;
-            case R.id.btnConfirm :
+            case R.id.etEdtInTime:
+                //Toast.makeText(FundooHrToolbarSearch.this,"Clicked",Toast.LENGTH_LONG).show();
+                // getCurrentTime();
+                break;
+            case R.id.btnConfirm:
+                //sendEditTextDataToRest();
                 Call<MessageData> timeEntryConfirmation = retrofit.create(RestApi.class)
                         .sentTimeEntryConfirmation(
-                                new TimeEntryGson(
-                                        new Data(gsonData.getData().getUserId(),etEdtTime.getText().toString(),etEdtDate.getText().toString(),
-                                                gsonData.getData().getTotalTime()),updateStatus));
+                                new TimeEntryResponse(
+                                        new TimeEntryResponseDataModel(gsonData.getTimeEntryResponseDataModel().getUserId(),
+                                                                        etEdtInTime.getText().toString(),
+                                                                        etEdtDate.getText().toString(),
+                                                                        gsonData.getTimeEntryResponseDataModel().getTotalTime()),
+                                                                        updateStatus));
                 timeEntryConfirmation.enqueue(new Callback<MessageData>() {
                     @Override
                     public void onResponse(Call<MessageData> call, Response<MessageData> response) {
-                        if (response.body().isData()){
+                        if (response.body().isData()) {
 
-                        }else {
-                            Toast.makeText(FundooHrToolbarSearch.this,"Your data saved successfully",Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(FundooHrToolbarSearch.this, "Your data saved successfully", Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -142,8 +188,9 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
                     }
                 });
                 break;
-            case R.id.switchEdtTimeDate:
-                btnConfirm.setVisibility(View.VISIBLE);
+            case R.id.txtWantToEdit:
+                sendEditTextDataToRest();
+                // btnConfirm.setVisibility(View.VISIBLE);
                 break;
 
         }
@@ -152,26 +199,24 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
     @Override
     public void onFocusChange(View view, boolean b) {
         int id = view.getId();
-        switch (id){
-            case R.id.etSearchMsg :
-                Toast.makeText(FundooHrToolbarSearch.this,"focused edit text",Toast.LENGTH_LONG).show();
-               // loadEditTextSearch();
+        switch (id) {
+            case R.id.etSearchMsg:
+                // Toast.makeText(FundooHrToolbarSearch.this,"focused edit text",Toast.LENGTH_LONG).show();
                 break;
-            case R.id.etEtDate :
-                Toast.makeText(FundooHrToolbarSearch.this,"focused edit text",Toast.LENGTH_LONG).show();
+            case R.id.etEtDate:
+                Toast.makeText(FundooHrToolbarSearch.this, "focused edit text", Toast.LENGTH_LONG).show();
                 getCurrentDate();
                 break;
-            case R.id.etEtTime :
+            case R.id.etEdtInTime:
                 getCurrentTime();
                 break;
         }
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        gps=new GpsLocationTracker(this);
+        /*gps=new GpsLocationTracker(this);
         if(gps.canGetLocation()){
 
             latitude = gps.getLatitude();
@@ -184,7 +229,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
             // GPS or Network is not enabled
             // Ask user to enable GPS/network in settings
             gps.showSettingsAlert();
-        }
+        }*/
     }
 
     @Override
@@ -201,13 +246,14 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
                 finish();
                 break;
             case R.id.action_search:
-                loadEditTextSearch();
+                //loadEditTextSearch();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-    private void loadEditTextSearch(){
-        ArrayList<String> msgStored = SharedPreference.loadList(FundooHrToolbarSearch.this,Utils.PREFS_NAME,Utils.KEY_COUNTRIES);
+
+    private void loadEditTextSearch() {
+        ArrayList<String> msgStored = SharedPreference.loadList(FundooHrToolbarSearch.this, Utils.PREFS_NAME, Utils.KEY_COUNTRIES);
         Utils.setListViewHeightBasedOnChildren(listView);
 
         etSearchMsg.setHint("Enter your message");
@@ -220,7 +266,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
 
         toolbarSearchDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         msgStored = (msgStored != null && msgStored.size() > 0) ? msgStored : new ArrayList<String>();
-        final SearchAdapter searchAdapter = new SearchAdapter(FundooHrToolbarSearch.this,msgStored,false);
+        final SearchAdapter searchAdapter = new SearchAdapter(FundooHrToolbarSearch.this, msgStored, false);
 
         listView.setVisibility(View.VISIBLE);
         listView.setAdapter(searchAdapter);
@@ -231,16 +277,32 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
                 String message = String.valueOf(adapterView.getItemAtPosition(i));
                 SharedPreference.addList(FundooHrToolbarSearch.this, Utils.PREFS_NAME, Utils.KEY_COUNTRIES, message);
                 etSearchMsg.setText(message);
-                sendEditTextDataToRest();
+                if (etSearchMsg.getText().toString() == "give me attendance log") {
+                   /* list=getTheAttendaceLog();
+                    AttendaceRecyclerViewAdapter adapter=new AttendaceRecyclerViewAdapter(FundooHrToolbarSearch.this,list);
+                    recyclerView.setAdapter(adapter);*/
+                } else {
+                    sendEditTextDataToRest();
+                }
                 listView.setVisibility(View.GONE);
             }
         });
 
+        etSearchMsg.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    listView.setVisibility(View.GONE);
+                    txtMsgEmpty.setVisibility(View.GONE);
+                    etSearchMsg.setHint("");
+                }
+            }
+        });
         etSearchMsg.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String[] message = FundooHrToolbarSearch.this.getResources().getStringArray(R.array.saved_messages);
-                mMessages = new ArrayList<String>(Arrays.asList(message));
+                mMessages = new ArrayList<>(Arrays.asList(message));
                 listView.setVisibility(View.VISIBLE);
                 sendEditTextDataToRest();
                 searchAdapter.updateList(mMessages, true);
@@ -277,7 +339,8 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
             }
         });
     }
-    public void getCurrentDate(){
+
+    private void getCurrentDate() {
         // Get Current Date
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
@@ -293,30 +356,47 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
     }
-    public void sendEditTextDataToRest(){
-        String mobile_no = "+919923911289"/*getIntent().getStringExtra("mobile")*/;
+
+    private void sendEditTextDataToRest() {
+        String mobile_no = "+917757852219";// getIntent().getStringExtra("mobile");
         String search_text = etSearchMsg.getText().toString();
-        Call<TimeEntryGson> timeEntryResponse = retrofit.create(RestApi.class).getTimeEntryMsg(new TimeEntryMessage(mobile_no, search_text));
-        timeEntryResponse.enqueue(new Callback<TimeEntryGson>() {
+        Call<TimeEntryResponse> timeEntryResponse = retrofit.create(RestApi.class).getTimeEntryMsg(new TimeEntryPostMessageModel(mobile_no, search_text));
+        timeEntryResponse.enqueue(new Callback<TimeEntryResponse>() {
             @Override
-            public void onResponse(Call<TimeEntryGson> call, Response<TimeEntryGson> response) {
+            public void onResponse(Call<TimeEntryResponse> call, Response<TimeEntryResponse> response) {
                 aSwitch.setVisibility(View.VISIBLE);
                 txtViewEditMsg.setVisibility(View.VISIBLE);
+                btnConfirm.setVisibility(View.VISIBLE);
 
-                TimeEntryGson gsonData = response.body();
-                Date date;
-                date = DateFormater.getDate(gsonData.getData().getInTime());
-                etEdtDate.setText(DateFormater.getCurrentDateString(date));
-                etEdtTime.setText(DateFormater.getCurrentTimeString(date));
+                gsonData = response.body();
+
+                if (Objects.equals(gsonData.getTimeEntryResponseDataModel().getOutTime(), "0")) {
+                    Date dateIn = DateFormater.getDate(gsonData.getTimeEntryResponseDataModel().getInTime());
+                    etEdtDate.setText(DateFormater.getCurrentDateString(dateIn));
+                    etEdtInTime.setText(DateFormater.getCurrentTimeString(dateIn));
+
+                    etEdtOutTime.setVisibility(View.INVISIBLE);
+                    txtOutTime.setVisibility(View.INVISIBLE);
+                } else {
+                    Date dateIn = DateFormater.getDate(gsonData.getTimeEntryResponseDataModel().getInTime());
+                    etEdtDate.setText(DateFormater.getCurrentDateString(dateIn));
+                    etEdtInTime.setText(DateFormater.getCurrentTimeString(dateIn));
+
+                    Date dateOut = DateFormater.getDate(gsonData.getTimeEntryResponseDataModel().getOutTime());
+                    txtOutTime.setVisibility(View.VISIBLE);
+                    etEdtOutTime.setText(DateFormater.getCurrentTimeString(dateOut));
+                }
             }
-
             @Override
-            public void onFailure(Call<TimeEntryGson> call, Throwable t) {
+            public void onFailure(Call<TimeEntryResponse> call, Throwable t) {
                 Toast.makeText(FundooHrToolbarSearch.this, "Something happen wrong ...........", Toast.LENGTH_LONG).show();
             }
         });
+        aSwitch.setVisibility(View.VISIBLE);
+        txtViewEditMsg.setVisibility(View.VISIBLE);
     }
-    public void getCurrentTime(){
+
+    private void getCurrentTime() {
         // Get Current Time
         final Calendar c = Calendar.getInstance();
         mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -328,106 +408,12 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        etEdtTime.setText(hourOfDay + ":" + minute + ":" + mSeconds);
+                        etEdtInTime.setText(hourOfDay + ":" + minute + ":" + mSeconds);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
     }
 
-    private void loadToolBarSearch() {
-        ArrayList<String> countryStored = SharedPreference.loadList(FundooHrToolbarSearch.this, Utils.PREFS_NAME, Utils.KEY_COUNTRIES);
-
-        View view = FundooHrToolbarSearch.this.getLayoutInflater().inflate(R.layout.view_toolbar_search, null);
-        LinearLayout parentToolbarSearch = (LinearLayout) view.findViewById(R.id.parent_toolbar_search);
-        ImageView imgToolBack = (ImageView) view.findViewById(R.id.img_tool_back);
-        final EditText editToolSearch = (EditText) view.findViewById(R.id.edt_tool_search);
-        ImageView imgToolMic = (ImageView) view.findViewById(R.id.img_tool_mic);
-        final ListView listSearch = (ListView) view.findViewById(R.id.list_search);
-        final TextView txtEmpty = (TextView) view.findViewById(R.id.txt_empty);
-
-        Utils.setListViewHeightBasedOnChildren(listSearch);
-
-        editToolSearch.setHint("Search your country");
-
-        final Dialog toolbarSearchDialog = new Dialog(FundooHrToolbarSearch.this, R.style.MyMaterialTheme);
-        toolbarSearchDialog.setContentView(view);
-        toolbarSearchDialog.setCancelable(false);
-        toolbarSearchDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        toolbarSearchDialog.getWindow().setGravity(Gravity.BOTTOM);
-        toolbarSearchDialog.show();
-
-        toolbarSearchDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-
-        countryStored = (countryStored != null && countryStored.size() > 0) ? countryStored : new ArrayList<String>();
-        final SearchAdapter searchAdapter = new SearchAdapter(FundooHrToolbarSearch.this, countryStored, false);
-
-        listSearch.setVisibility(View.VISIBLE);
-        listSearch.setAdapter(searchAdapter);
-
-        listSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String country = String.valueOf(adapterView.getItemAtPosition(i));
-                SharedPreference.addList(FundooHrToolbarSearch.this, Utils.PREFS_NAME, Utils.KEY_COUNTRIES, country);
-                editToolSearch.setText(country);
-                listSearch.setVisibility(View.GONE);
-            }
-        });
-
-        editToolSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String[] country = FundooHrToolbarSearch.this.getResources().getStringArray(R.array.countries_array);
-                mCountries = new ArrayList<String>(Arrays.asList(country));
-                listSearch.setVisibility(View.VISIBLE);
-                searchAdapter.updateList(mCountries, true);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                ArrayList<String> filterList = new ArrayList<String>();
-                boolean isNodata = false;
-                if (charSequence.length() > 0) {
-                    for (int i = 0; i < mCountries.size(); i++) {
-                        if (mCountries.get(i).toLowerCase().startsWith(charSequence.toString().trim().toLowerCase())) {
-                            filterList.add(mCountries.get(i));
-
-                            listSearch.setVisibility(View.VISIBLE);
-                            searchAdapter.updateList(filterList, true);
-                            isNodata = true;
-                        }
-                    }
-                    if (!isNodata) {
-                        listSearch.setVisibility(View.GONE);
-                        txtEmpty.setVisibility(View.VISIBLE);
-                        txtEmpty.setText("No data found");
-                    }
-                } else {
-                    listSearch.setVisibility(View.GONE);
-                    txtEmpty.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        imgToolBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toolbarSearchDialog.dismiss();
-            }
-        });
-
-        imgToolMic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editToolSearch.setText("");
-            }
-        });
-    }
 
     private void toolBarData() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -436,14 +422,26 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
         setSupportActionBar(toolbar);
     }
 
+    public void getTheAttendaceLog() {
 
-    @Override
-    public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-        boolean handled = false;
-        if (actionId == EditorInfo.IME_ACTION_SEND) {
-            sendEditTextDataToRest();
-            handled = true;
-        }
-        return handled;
+        Call<String> attendanceData = retrofit.create(RestApi.class).getAttendanceData();
+        attendanceData.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.i(TAG, "onResponse: .................." + response.body());
+                final Type typeToken = new TypeToken<ArrayList<AttendanceDataModel>>() {
+
+                }.getType();
+                ArrayList<AttendanceDataModel> dataModel = new Gson().fromJson(response.body(), typeToken);
+
+                AttendaceRecyclerViewAdapter adapter = new AttendaceRecyclerViewAdapter(FundooHrToolbarSearch.this, dataModel);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.i(TAG, "onFailure: ..................." + t.toString());
+            }
+        });
     }
 }

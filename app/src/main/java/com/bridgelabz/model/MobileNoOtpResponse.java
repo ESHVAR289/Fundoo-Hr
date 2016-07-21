@@ -7,7 +7,7 @@ package com.bridgelabz.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MobileNoOtpGson {
+public class MobileNoOtpResponse {
 
     @SerializedName("data")
     @Expose
@@ -16,30 +16,18 @@ public class MobileNoOtpGson {
     @Expose
     private Boolean status;
 
-    /**
-     * @return The data
-     */
     public String getData() {
         return data;
     }
 
-    /**
-     * @param data The data
-     */
     public void setData(String data) {
         this.data = data;
     }
 
-    /**
-     * @return The status
-     */
     public Boolean getStatus() {
         return status;
     }
 
-    /**
-     * @param status The status
-     */
     public void setStatus(Boolean status) {
         this.status = status;
     }

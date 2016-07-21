@@ -1,14 +1,11 @@
 package com.bridgelabz.restservice;
 
-import com.bridgelabz.Post;
 import com.bridgelabz.model.MessageData;
 import com.bridgelabz.model.MessageGson;
-import com.bridgelabz.model.MobileAndOtpModel;
-import com.bridgelabz.model.MobileNoOtpGson;
-import com.bridgelabz.model.TimeEntryGson;
-import com.bridgelabz.model.TimeEntryMessage;
-
-import java.util.List;
+import com.bridgelabz.model.MobileOtpPostDataModel;
+import com.bridgelabz.model.MobileNoOtpResponse;
+import com.bridgelabz.model.TimeEntryResponse;
+import com.bridgelabz.model.TimeEntryPostMessageModel;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,26 +18,26 @@ import retrofit2.http.POST;
  */
 
 public interface RestApi {
-    @GET("/face_rest.json")
-    Call<List<Post>> getPosts();
-
     @Headers("Content-Type: application/json")
     @POST("sendmsg/")
     Call<MessageGson> getMessage(@Body MessageGson messageGson);
 
     @Headers("Content-Type: application/json")
-    @POST("otp/")
-    Call<MobileNoOtpGson> getMobileNoStatus(@Body MobileAndOtpModel mobileAndOtpModel);
+    @POST("sms/otp/")
+    Call<MobileNoOtpResponse> getMobileNoStatus(@Body MobileOtpPostDataModel mobileOtpPostDataModel);
 
     @Headers("Content-Type: application/json")
-    @POST("verify/")
-    Call<MobileNoOtpGson> getOtpStatus(@Body MobileAndOtpModel mobileAndOtpModel);
+    @POST("sms/verify/")
+    Call<MobileNoOtpResponse> getOtpStatus(@Body MobileOtpPostDataModel mobileOtpPostDataModel);
 
     @Headers("Content-Type: application/json")
-    @POST("timeEntryMsg/")
-    Call<TimeEntryGson> getTimeEntryMsg(@Body TimeEntryMessage timeEntryMessage);
+    @POST("message/")
+    Call<TimeEntryResponse> getTimeEntryMsg(@Body TimeEntryPostMessageModel timeEntryPostMessageModel);
 
     @Headers("Content-Type: application/json")
-    @POST("timeEntryConform/")
-    Call<MessageData> sentTimeEntryConfirmation(@Body TimeEntryGson timeEntryGson);
+    @POST("message/timeEntryConform/")
+    Call<MessageData> sentTimeEntryConfirmation(@Body TimeEntryResponse timeEntryResponse);
+
+    @GET("dummy_attendance.json")
+    Call<String> getAttendanceData();
 }

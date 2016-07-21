@@ -4,11 +4,11 @@ package com.bridgelabz.model;
  * Created by bridgeit007 on 8/7/16.
  */
 
-public class TimeEntryMessage {
+public class TimeEntryPostMessageModel {
     String mobile;
     String message;
 
-    public TimeEntryMessage(String mobile, String message) {
+    public TimeEntryPostMessageModel(String mobile, String message) {
         this.mobile = mobile;
         this.message = message;
     }
