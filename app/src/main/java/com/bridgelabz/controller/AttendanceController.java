@@ -12,6 +12,8 @@ import com.bridgelabz.restservice.RestApi;
 import com.bridgelabz.util.App;
 import com.bridgelabz.view.FundooHrToolbarSearch;
 
+import java.sql.Time;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +43,7 @@ public class AttendanceController {
         timeEntryResponse.enqueue(new Callback<TimeEntryResponse>() {
             @Override
             public void onResponse(Call<TimeEntryResponse> call, Response<TimeEntryResponse> response) {
+                if (response.body() != null)
                 mTimeEntryResponseData = response.body();
                 mResponseCallbackListener.messageResponse(mTimeEntryResponseData);
             }
