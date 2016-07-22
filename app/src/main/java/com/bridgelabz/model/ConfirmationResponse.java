@@ -3,13 +3,13 @@ package com.bridgelabz.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MessageGson {
+public class ConfirmationResponse {
 
-    @SerializedName("message")
+    @SerializedName("data")
     @Expose
     private String message;
 
-    public MessageGson(String message) {
+    public ConfirmationResponse(String message) {
         this.message = message;
     }
 

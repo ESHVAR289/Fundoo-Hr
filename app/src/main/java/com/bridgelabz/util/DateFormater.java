@@ -11,9 +11,10 @@ import java.util.Date;
 public class DateFormater {
 
     public static Date getDate(String s) {
-        Date date=new Date();
+        Date date = null;
+        String DATE_TIME_FORMAT = "yyyy-MM-DD HH:mm:ss +05:30";
         try {
-            SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            SimpleDateFormat dateFormat=new SimpleDateFormat(DATE_TIME_FORMAT);
             date=dateFormat.parse(s);
         } catch (ParseException e) {
             e.printStackTrace();

@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 @Generated("org.jsonschema2pojo")
 public class TimeEntryResponse {
 
-    @SerializedName("timeEntryResponseDataModel")
+    @SerializedName("data")
     @Expose
     private TimeEntryResponseDataModel timeEntryResponseDataModel;
 
