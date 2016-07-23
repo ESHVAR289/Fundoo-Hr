@@ -11,30 +11,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bridgelabz.util.App;
 import com.bridgelabz.R;
-import com.bridgelabz.model.MobileOtpPostDataModel;
-import com.bridgelabz.model.MobileNoOtpResponse;
-import com.bridgelabz.restservice.RestApi;
+import com.bridgelabz.callback.LoginCallbackListener;
+import com.bridgelabz.controller.LoginController;
+import com.bridgelabz.util.App;
 
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class FundooHrLoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class FundooHrLoginActivity extends AppCompatActivity implements View.OnClickListener, LoginCallbackListener {
     @Inject
     Retrofit retrofit;
-    TextView txtViewForRetrofit;
-    EditText etMobileNo,etConfirmOtp;
-    AppCompatButton btnSendOtp, btnConfirmOtp;
-    Button btnNext;
-    String mo_number, regexString = "^[+][0-9]{10,13}$";
+    private ProgressDialog progressDialog;
+    private EditText etMobileNo, etConfirmOtp;
+    private String mo_number;
+    private LoginController mLoginController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,44 +38,41 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
         setSupportActionBar(toolbar);
 
         ((App) getApplication()).getmNetComponent().inject(this);
-
+        mLoginController = new LoginController(FundooHrLoginActivity.this, retrofit);
         etMobileNo = (EditText) findViewById(R.id.editTextPhone);
-        btnSendOtp = (AppCompatButton) findViewById(R.id.buttonRegister);
-        btnNext = (Button) findViewById(R.id.btnNext);
+        AppCompatButton btnSendOtp = (AppCompatButton) findViewById(R.id.buttonRegister);
+        Button btnNext = (Button) findViewById(R.id.btnNext);
 
         btnSendOtp.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        int id=view.getId();
-        switch (id){
-            case R.id.buttonRegister :
+        int id = view.getId();
+        switch (id) {
+            case R.id.buttonRegister:
                 sendOtpToMobile();
                 break;
-
         }
     }
 
     private void confirmOtp() {
         //creating layout inflater object for the dialog box
-        LayoutInflater layoutInflater=LayoutInflater.from(this);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
 
         //creating the view to get the dialog box
-        View confirmDialogBox = layoutInflater.inflate(R.layout.otp_confirmation,null);
+        View confirmDialogBox = layoutInflater.inflate(R.layout.otp_confirmation, null);
 
         //Initializing the confirm button for dialog box and the edit text of dialog box
-        btnConfirmOtp = (AppCompatButton) confirmDialogBox.findViewById(R.id.buttonConfirm);
+        AppCompatButton btnConfirmOtp = (AppCompatButton) confirmDialogBox.findViewById(R.id.buttonConfirm);
         etConfirmOtp = (EditText) confirmDialogBox.findViewById(R.id.editTextOtp);
         //creating an alert dialog builder
-        AlertDialog.Builder alert=new AlertDialog.Builder(this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         //adding out dialog box to the activity
         alert.setView(confirmDialogBox);
-
         //creating an alert dialog
-        final AlertDialog alertDialog=alert.create();
-
+        final AlertDialog alertDialog = alert.create();
         //Displaying the alert dialog
         alertDialog.show();
 
@@ -90,55 +81,51 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
             public void onClick(View view) {
                 //Hiding the alert dialog
                 alertDialog.dismiss();
-
                 //Displaying a progressbar
-                final ProgressDialog loading = ProgressDialog.show(FundooHrLoginActivity.this, "Authenticating", "Please wait while we check the entered code", false,false);
-
+                progressDialog = ProgressDialog.show(FundooHrLoginActivity.this, "Authenticating", "Please wait while we check the entered code", false, false);
                 //Getting the user entered otp from edittext
                 final String otp = etConfirmOtp.getText().toString().trim();
-                Call<MobileNoOtpResponse> otpGson = retrofit.create(RestApi.class).getOtpStatus(new MobileOtpPostDataModel(mo_number, etConfirmOtp.getText().toString().trim()));
-                otpGson.enqueue(new Callback<MobileNoOtpResponse>() {
-                    @Override
-                    public void onResponse(Call<MobileNoOtpResponse> call, Response<MobileNoOtpResponse> response) {
-                        if (response.body().getStatus()) {
-                            loading.dismiss();
-                            startActivity(new Intent(getApplicationContext(), FundooHrToolbarSearch.class));
-                        }else {
-                            //Displaying a toast if the otp entered is wrong
-                            Toast.makeText(FundooHrLoginActivity.this,"Wrong OTP Please Try Again",Toast.LENGTH_LONG).show();
-                            confirmOtp();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<MobileNoOtpResponse> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
-                    }
-                });
+                mLoginController.getOtpConfirmation(mo_number, otp);
             }
         });
     }
 
     //this method send the otp to the mobile no.
-    public  void sendOtpToMobile(){
+    private void sendOtpToMobile() {
         //Displaying the Progress dialog
-        final ProgressDialog progressDialog=ProgressDialog.show(this,"Getting otp", "Please wait.....",false,false);
+        progressDialog = ProgressDialog.show(this, "Getting otp", "Please wait.....", false, false);
         mo_number = "+91" + etMobileNo.getText().toString();
+        String regexString = "^[+][0-9]{10,13}$";
         if (mo_number.length() < 10 || mo_number.length() > 13 || mo_number.matches(regexString)) {
-
-            Call<MobileNoOtpResponse> mobileNoOtpGson = retrofit.create(RestApi.class).getMobileNoStatus(new MobileOtpPostDataModel(mo_number));
-            mobileNoOtpGson.enqueue(new Callback<MobileNoOtpResponse>() {
-                @Override
-                public void onResponse(Call<MobileNoOtpResponse> call, Response<MobileNoOtpResponse> response) {
-                    if (response.body().getStatus()){
-                        progressDialog.dismiss();
-                        confirmOtp();
-                    }
-                }
-                @Override
-                public void onFailure(Call<MobileNoOtpResponse> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),"Something happens wrong ! Please call to our contact person",Toast.LENGTH_LONG).show();
-                }
-            });
+            mLoginController.getTheOtp(mo_number);
         }
+    }
+
+    @Override
+    public void mobileNoResponse(Boolean status) {
+        progressDialog.dismiss();
+        confirmOtp();
+    }
+
+    @Override
+    public void checkForOtpConfirmation(Boolean status) {
+        if (status) {
+            progressDialog.dismiss();
+            startActivity(new Intent(getApplicationContext(), FundooHrToolbarSearch.class));
+        } else {
+            //Displaying a toast if the otp entered is wrong
+            Toast.makeText(FundooHrLoginActivity.this, "Wrong OTP Please Try Again", Toast.LENGTH_LONG).show();
+            confirmOtp();
+        }
+    }
+
+    @Override
+    public void onFailureMobileNoResponse() {
+        Toast.makeText(getApplicationContext(), "Something happens wrong ! Please call to our contact person", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onFailureOtpResponse() {
+        Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
     }
 }
