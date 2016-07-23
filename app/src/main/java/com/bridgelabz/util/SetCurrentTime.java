@@ -8,14 +8,10 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-/**
- * Created by bridgeit007 on 9/7/16.
- */
-
 public class SetCurrentTime implements View.OnFocusChangeListener,TimePickerDialog.OnTimeSetListener {
+    Context context;
     private EditText etCurrentTime;
     private Calendar calendar;
-    Context context;
 
     public SetCurrentTime(EditText etCurrentTime, Context context) {
         this.context = context;

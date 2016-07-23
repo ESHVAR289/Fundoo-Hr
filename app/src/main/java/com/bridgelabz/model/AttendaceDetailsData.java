@@ -5,10 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
 
-/**
- * Created by bridgeit007 on 13/7/16.
- */
-
 @Generated("org.jsonschema2pojo")
 public class AttendaceDetailsData {
     @SerializedName("inTime")

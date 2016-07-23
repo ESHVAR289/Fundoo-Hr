@@ -1,21 +1,16 @@
 package com.bridgelabz.restservice;
 
-import com.bridgelabz.model.MessageData;
 import com.bridgelabz.model.ConfirmationResponse;
-import com.bridgelabz.model.MobileOtpPostDataModel;
 import com.bridgelabz.model.MobileNoOtpResponse;
-import com.bridgelabz.model.TimeEntryResponse;
+import com.bridgelabz.model.MobileOtpPostDataModel;
 import com.bridgelabz.model.TimeEntryPostMessageModel;
+import com.bridgelabz.model.TimeEntryResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-
-/**
- * Created by eshvar289 on 3/7/16.
- */
 
 public interface RestApi {
     @Headers("Content-Type: application/json")

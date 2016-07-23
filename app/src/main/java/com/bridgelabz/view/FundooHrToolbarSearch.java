@@ -32,16 +32,16 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bridgelabz.R;
-import com.bridgelabz.callback.ResponseCallbackListener;
 import com.bridgelabz.adapter.AttendaceRecyclerViewAdapter;
 import com.bridgelabz.adapter.SearchAdapter;
+import com.bridgelabz.callback.ResponseCallbackListener;
 import com.bridgelabz.controller.AttendanceController;
+import com.bridgelabz.dagger.App;
 import com.bridgelabz.model.AttendanceDataModel;
 import com.bridgelabz.model.ConfirmationResponse;
 import com.bridgelabz.model.TimeEntryResponse;
 import com.bridgelabz.restservice.RestApi;
 import com.bridgelabz.shared_preference.SharedPreference;
-import com.bridgelabz.util.App;
 import com.bridgelabz.util.DateFormater;
 import com.bridgelabz.util.GpsLocationTracker;
 import com.bridgelabz.util.Utils;
@@ -69,8 +69,6 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
     String gsonString="{\"data\":{\"userId\":\"+919923911289\",\"inTime\":\"2016-07-22 11:27:49 +05:30\",\"outTime\":\"0\",\"totalTime\":\"0\",\"type\":\"attendance\"}}";
     AttendanceController mAttendanceController;
     Toolbar toolbar;
-    private ArrayList<String> mCountries;
-    private ArrayList<String> mMessages;
     double latitude, longitude;
     boolean updateStatus;
     GpsLocationTracker gps;
@@ -82,9 +80,11 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
     TimeEntryResponse mTimeEntryResponse;
     AttendanceDataModel dataModel;
     TextView txtViewEditMsg, txtMsgEmpty, txtOutTime;
+    ArrayList<AttendanceDataModel> list;
+    private ArrayList<String> mCountries;
+    private ArrayList<String> mMessages;
     private int mYear, mMonth, mDay, mHour, mMinute, mSeconds;
     private RecyclerView recyclerView;
-    ArrayList<AttendanceDataModel> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -443,5 +443,10 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
             Toast.makeText(this,"Updated successfully",Toast.LENGTH_LONG).show();
         else
             Toast.makeText(this,"There is some problem",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onFailureMessageResponse(Throwable t) {
+        Toast.makeText(this, t.toString(), Toast.LENGTH_LONG).show();
     }
 }

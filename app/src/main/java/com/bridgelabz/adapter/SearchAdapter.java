@@ -3,7 +3,6 @@ package com.bridgelabz.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +12,6 @@ import android.widget.TextView;
 import com.bridgelabz.R;
 
 import java.util.ArrayList;
-
-/**
- * Created by eshvar289 on 10/7/16.
- */
 
 public class SearchAdapter extends BaseAdapter{
     private Context context;

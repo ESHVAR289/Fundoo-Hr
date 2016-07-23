@@ -4,10 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by bridgeit007 on 8/7/16.
- */
-
 public class DateFormater {
 
     public static Date getDate(String s) {

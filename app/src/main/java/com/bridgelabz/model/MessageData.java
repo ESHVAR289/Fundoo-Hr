@@ -3,10 +3,6 @@ package com.bridgelabz.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by bridgeit007 on 12/7/16.
- */
-
 public class MessageData {
     @SerializedName("data")
     @Expose

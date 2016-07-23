@@ -1,9 +1,5 @@
 package com.bridgelabz.model;
 
-/**
- * Created by bridgeit007 on 8/7/16.
- */
-
 public class TimeEntryPostMessageModel {
     String mobile;
     String message;

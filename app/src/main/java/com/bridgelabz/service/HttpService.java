@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.bridgelabz.view.FundooHrLoginActivity;
-import com.bridgelabz.model.MobileOtpPostDataModel;
 import com.bridgelabz.model.MobileNoOtpResponse;
+import com.bridgelabz.model.MobileOtpPostDataModel;
 import com.bridgelabz.restservice.RestApi;
+import com.bridgelabz.view.FundooHrLoginActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,14 +20,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-/**
- * Created by bridgeit007 on 6/7/16.
- */
-
 public class HttpService extends IntentService {
+    private static String TAG = HttpService.class.getSimpleName();
     @Inject
     Retrofit retrofit;
-    private static String TAG = HttpService.class.getSimpleName();
 
     public HttpService() {
         super(HttpService.class.getSimpleName());

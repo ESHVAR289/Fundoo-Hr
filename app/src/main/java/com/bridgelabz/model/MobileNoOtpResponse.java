@@ -1,9 +1,5 @@
 package com.bridgelabz.model;
 
-/**
- * Created by bridgeit007 on 1/7/16.
- */
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

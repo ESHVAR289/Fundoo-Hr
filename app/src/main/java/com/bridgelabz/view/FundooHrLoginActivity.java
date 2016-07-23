@@ -9,14 +9,13 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bridgelabz.R;
 import com.bridgelabz.callback.LoginCallbackListener;
 import com.bridgelabz.controller.LoginController;
-import com.bridgelabz.util.App;
+import com.bridgelabz.dagger.App;
 
 import javax.inject.Inject;
 
@@ -41,7 +40,6 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
         mLoginController = new LoginController(FundooHrLoginActivity.this, retrofit);
         etMobileNo = (EditText) findViewById(R.id.editTextPhone);
         AppCompatButton btnSendOtp = (AppCompatButton) findViewById(R.id.buttonRegister);
-        Button btnNext = (Button) findViewById(R.id.btnNext);
 
         btnSendOtp.setOnClickListener(this);
     }

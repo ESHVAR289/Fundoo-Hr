@@ -5,14 +5,10 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by eshvar289 on 10/7/16.
- */
 
 public class SharedPreference {
     //Avoid mgic numbers.
