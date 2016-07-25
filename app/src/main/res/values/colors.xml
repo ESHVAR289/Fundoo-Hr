@@ -16,7 +16,7 @@
     <color name="secondary_text_transparent_70">#B3727272</color>
 
     <color name="divider">#B6B6B6</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="chrome_grey">#F2F2F2</color>
 
@@ -50,4 +50,10 @@
     <color name="green_theme">#017C67</color>
     <color name="green_theme_dark">#00715C</color>
     <color name="green_theme_pink">#AF3F3F</color>
+
+    <!--new material theme-->
+    <color name="layout_background">#2e3237</color>
+    <color name="input_et_bg">#3b4148</color>
+    <color name="input_et_text">#888888</color>
+    <color name="input_et_hint">#5e6266</color>
 </resources>

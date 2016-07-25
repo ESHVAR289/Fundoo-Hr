@@ -18,6 +18,22 @@
     <string name="lbl_enter_otp">Enter OTP</string>
     <string name="lbl_submit">SUBMIT</string>
     <string name="title_activity_fundoo_hr_search">FundooHrSearchActivity</string>
+    <string name="btn_login_lable">Login</string>
+    <string name="registration_lable">Don\'t have an account? Register Here.</string>
+    <string name="enter_your_mobile_no">Enter your mobile no.</string>
+    <string name="enter_received_otp">Enter received OTP</string>
+    <string name="enter_the_code_received">Enter the code received</string>
+    <string name="confirm_otp">Confirm</string>
+    <string name="confirm_response">CONFIRM</string>
+    <string name="current_in_time">current in time</string>
+    <string name="out_time">Out-Time</string>
+    <string name="in_time">In-Time</string>
+    <string name="current_out_time">current out time</string>
+    <string name="date">Date</string>
+    <string name="current_date">current date</string>
+    <string name="edit_date_and_time">Edit Date and Time</string>
+    <string name="edit_switch">Switch</string>
+    <string name="attendance_search">attendance search</string>
 
     <!--String array for messages -->
     <string-array name="saved_messages">

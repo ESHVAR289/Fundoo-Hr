@@ -3,7 +3,6 @@ package com.bridgelabz.controller;
 import android.util.Log;
 
 import com.bridgelabz.callback.ResponseCallbackListener;
-import com.bridgelabz.dagger.App;
 import com.bridgelabz.model.ConfirmationResponse;
 import com.bridgelabz.model.TimeEntryPostMessageModel;
 import com.bridgelabz.model.TimeEntryResponse;
@@ -18,10 +17,9 @@ import retrofit2.Retrofit;
 public class AttendanceController {
 
     private static final String TAG = AttendanceController.class.getSimpleName();
-    Retrofit mRetrofit;
+    private Retrofit mRetrofit;
     private TimeEntryResponse mTimeEntryResponseData;
     private ResponseCallbackListener mResponseCallbackListener;
-    private App mAppInstance;
 
     public AttendanceController(ResponseCallbackListener callbackListener, Retrofit retrofit) {
         this.mResponseCallbackListener = callbackListener;

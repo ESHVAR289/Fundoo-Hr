@@ -66,21 +66,20 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
     private static final String TAG = FundooHrToolbarSearch.class.getSimpleName();
     @Inject
     Retrofit retrofit;
-    String gsonString="{\"data\":{\"userId\":\"+919923911289\",\"inTime\":\"2016-07-22 11:27:49 +05:30\",\"outTime\":\"0\",\"totalTime\":\"0\",\"type\":\"attendance\"}}";
-    AttendanceController mAttendanceController;
-    Toolbar toolbar;
     double latitude, longitude;
-    boolean updateStatus;
     GpsLocationTracker gps;
-    EditText editToolSearch, etSearchMsg, etEdtDate, etEdtInTime, etEdtOutTime;
-    Button btnConfirm;
-    ListView listView;
-    View editTextView;
-    Switch aSwitch;
-    TimeEntryResponse mTimeEntryResponse;
     AttendanceDataModel dataModel;
-    TextView txtViewEditMsg, txtMsgEmpty, txtOutTime;
     ArrayList<AttendanceDataModel> list;
+    private AttendanceController mAttendanceController;
+    private Toolbar toolbar;
+    private boolean updateStatus;
+    private EditText editToolSearch, etSearchMsg, etEdtDate, etEdtInTime, etEdtOutTime;
+    private Button btnConfirm;
+    private ListView listView;
+    private View editTextView;
+    private Switch aSwitch;
+    private TimeEntryResponse mTimeEntryResponse;
+    private TextView txtViewEditMsg, txtMsgEmpty, txtOutTime;
     private ArrayList<String> mCountries;
     private ArrayList<String> mMessages;
     private int mYear, mMonth, mDay, mHour, mMinute, mSeconds;
@@ -96,7 +95,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
         initializeComponent();
         setOnClickListenerToComponent();
         setFocusListenerToComponent();
-        TimeEntryResponse timeEntryResponse=new Gson().fromJson(gsonString,TimeEntryResponse.class);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         etSearchMsg = (EditText) findViewById(R.id.etSearchMsg);
 
@@ -116,7 +115,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
 
     }
 
-    public void initializeComponent() {
+    private void initializeComponent() {
         editTextView = FundooHrToolbarSearch.this.getLayoutInflater().inflate(R.layout.activity_fundoo_hr_toolbar_search, null);
         /*etSearchMsg = (EditText) editTextView.findViewById(R.id.etSearchMsg);*/
         listView = (ListView) editTextView.findViewById(R.id.list_msg_search);
@@ -131,7 +130,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewAttendance);
     }
 
-    public void setOnClickListenerToComponent() {
+    private void setOnClickListenerToComponent() {
         etEdtDate.setOnClickListener(this);
         etEdtInTime.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
@@ -139,7 +138,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
         //etSearchMsg.setOnClickListener(this);
     }
 
-    public void setFocusListenerToComponent() {
+    private void setFocusListenerToComponent() {
         etEdtDate.setOnFocusChangeListener(this);
         etEdtInTime.setOnFocusChangeListener(this);
         // etSearchMsg.setOnFocusChangeListener(this);
@@ -448,5 +447,10 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
     @Override
     public void onFailureMessageResponse(Throwable t) {
         Toast.makeText(this, t.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onFailureOtpConfirmation() {
+
     }
 }
