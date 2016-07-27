@@ -5,6 +5,9 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,7 +65,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, ResponseCallbackListener {
+public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, ResponseCallbackListener, NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = FundooHrToolbarSearch.class.getSimpleName();
     @Inject
     Retrofit retrofit;
@@ -70,6 +73,8 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
     GpsLocationTracker gps;
     AttendanceDataModel dataModel;
     ArrayList<AttendanceDataModel> list;
+    NavigationView mNavigationView;
+    DrawerLayout mDrawerLayout;
     private AttendanceController mAttendanceController;
     private Toolbar toolbar;
     private boolean updateStatus;
@@ -113,6 +118,30 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
             }
         });
 
+        // Initializing Drawer Layout and ActionBarToggle
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        //Setting the actionbarToggle to drawer layout
+        mDrawerLayout.setDrawerListener(actionBarDrawerToggle);
+
+        //calling sync state is necessay or else your hamburger icon wont show up
+        actionBarDrawerToggle.syncState();
+
     }
 
     private void initializeComponent() {
@@ -128,6 +157,9 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
         aSwitch = (Switch) findViewById(R.id.switchEdtTimeDate);
         txtViewEditMsg = (TextView) findViewById(R.id.txtWantToEdit);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewAttendance);
+
+        mNavigationView = (NavigationView) findViewById(R.id.nvView);
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     private void setOnClickListenerToComponent() {
@@ -453,4 +485,40 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
     public void onFailureOtpConfirmation() {
 
     }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        //Checking if the item is in checked state or not, if not make it in checked state
+        if (menuItem.isChecked())
+            menuItem.setChecked(false);
+        else
+            menuItem.setChecked(true);
+        //Closing drawer on item click
+        mDrawerLayout.closeDrawers();
+
+        //Check to see which item was being clicked and perform appropriate action
+        switch (menuItem.getItemId()) {
+            //Replacing the main content with ContentFragment Which is our Inbox View;
+            case R.id.sign_out:
+                Toast.makeText(getApplicationContext(), "Sign out successfully", Toast.LENGTH_SHORT).show();
+                /*ContentFragment fragment = new ContentFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame,fragment);
+                fragmentTransaction.commit();*/
+                return true;
+            case R.id.about:
+                Toast.makeText(getApplicationContext(), "About clicked", Toast.LENGTH_SHORT).show();
+
+                return true;
+            case R.id.edt_profile:
+                Toast.makeText(getApplicationContext(), "This section will comming soon", Toast.LENGTH_SHORT).show();
+
+            default:
+                Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+
+    }
+
+
 }

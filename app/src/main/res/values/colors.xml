@@ -22,15 +22,17 @@
 
 
     <color name="red">#F44336</color>
+    <color name="red_google">#d34836</color>
     <color name="pink">#FF4081</color>
     <color name="purple">#9C27B0</color>
     <color name="deepblue">#7C4DFF</color>
-    <color name="indigo">#3F51B5</color>
-    <color name="blue">#448AFF</color>
+    <color name="indigo">#3f51b5</color>
+    <color name="darkblue">#3b5998</color>
+    <color name="blue">#448aff</color>
     <color name="lightblue">#03A9F4</color>
-    <color name="cyan">#00BCD4</color>
+    <color name="cyan">#00bcd4</color>
     <color name="teal">#009688</color>
-    <color name="green">#4CAF50</color>
+    <color name="green">#4caf50</color>
     <color name="lightgreen">#8BC34A</color>
     <color name="lime">#CDDC39</color>
     <color name="yellow">#FFEB3B</color>
