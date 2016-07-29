@@ -26,19 +26,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_mobile_black" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/inputMobileNo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
                 <EditText
                     android:id="@+id/etMobileNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="MOBILE NUMBER"
-                    android:textSize="15sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:hint="MOBILE NUMBER"
+                    android:textSize="15sp"
+                    android:inputType="number" />
         </LinearLayout>
 
         <TextView
@@ -57,19 +51,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_mail_black" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/inputEmailId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
+                    <EditText
                     android:id="@+id/etEmailId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="EMAIL ID"
-                    android:textSize="15sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:hint="EMAIL ID"
+                    android:textSize="15sp"
+                        android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <TextView
@@ -88,19 +76,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_lock_black" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/inputPswd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
                 <EditText
                     android:id="@+id/etRegistrationPswd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="PASSWORD"
-                    android:textSize="15sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:hint="PASSWORD"
+                    android:textSize="15sp"
+                    android:inputType="textPassword" />
         </LinearLayout>
 
         <TextView
@@ -119,19 +101,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_lock_black" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/inputRePswd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
+                    <EditText
                     android:id="@+id/etRegistrationRePswd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RE-ENTER PASSWORD"
-                    android:textSize="15sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:hint="RE-ENTER PASSWORD"
+                    android:textSize="15sp"
+                        android:inputType="textPassword" />
         </LinearLayout>
 
         <TextView
@@ -198,8 +174,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
-
+            android:layout_weight="0.5"/>
         <android.support.v7.widget.AppCompatButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
