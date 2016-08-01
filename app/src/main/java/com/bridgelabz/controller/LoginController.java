@@ -1,16 +1,32 @@
 package com.bridgelabz.controller;
 
+import android.util.Log;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.bridgelabz.callback.LoginCallbackListener;
+import com.bridgelabz.dagger.AppController;
 import com.bridgelabz.model.MobileNoOtpResponse;
 import com.bridgelabz.model.MobileOtpPostDataModel;
 import com.bridgelabz.restservice.RestApi;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.bridgelabz.util.Constants.LOGIN_URL;
+
 public class LoginController {
+    private static String TAG = LoginController.class.getSimpleName();
     private LoginCallbackListener mLoginCallbackListener;
     private Retrofit mRetrofit;
 
@@ -49,5 +65,41 @@ public class LoginController {
                 mLoginCallbackListener.onFailureOtpResponse();
             }
         });
+    }
+
+    public void checkLoginDetails(final String mo_number, final String loginPassword) {
+        //Tag to cancel the request
+        String tag_req = "req_login";
+        StringRequest loginRequest = new StringRequest(Request.Method.POST, LOGIN_URL, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Login Response" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("data").equals("Successfully Login")) {
+                        mLoginCallbackListener.loginResponse();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Registration Error" + error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> loginParams = new HashMap<>();
+                loginParams.put("mobile", mo_number);
+                loginParams.put("password", loginPassword);
+                Log.i(TAG, "getParams: " + mo_number + " " + loginPassword);
+                return loginParams;
+            }
+        };
+
+        //Adding the request to the request que
+        AppController.getInstance().addToRequestQueue(loginRequest, tag_req);
     }
 }

@@ -8,4 +8,6 @@ public interface LoginCallbackListener {
     void onFailureMobileNoResponse();
 
     void onFailureOtpResponse();
+
+    void loginResponse();
 }

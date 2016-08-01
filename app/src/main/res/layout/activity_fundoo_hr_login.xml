@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -21,5 +22,5 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/fundoo_hr_login" />
+    <include layout="@layout/login_layout" />
 </android.support.design.widget.CoordinatorLayout>

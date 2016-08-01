@@ -4,8 +4,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,11 +41,12 @@ import com.bridgelabz.adapter.AttendaceRecyclerViewAdapter;
 import com.bridgelabz.adapter.SearchAdapter;
 import com.bridgelabz.callback.ResponseCallbackListener;
 import com.bridgelabz.controller.AttendanceController;
-import com.bridgelabz.dagger.App;
+import com.bridgelabz.dagger.AppController;
 import com.bridgelabz.model.AttendanceDataModel;
 import com.bridgelabz.model.ConfirmationResponse;
 import com.bridgelabz.model.TimeEntryResponse;
 import com.bridgelabz.restservice.RestApi;
+import com.bridgelabz.shared_preference.SessionManager;
 import com.bridgelabz.shared_preference.SharedPreference;
 import com.bridgelabz.util.DateFormater;
 import com.bridgelabz.util.GpsLocationTracker;
@@ -94,7 +97,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fundoo_hr_toolbar_search);
-        ((App) getApplication()).getmNetComponent().inject(this);
+        ((AppController) getApplication()).getmNetComponent().inject(this);
         mAttendanceController = new AttendanceController(FundooHrToolbarSearch.this,retrofit);
         toolBarData();
         initializeComponent();
@@ -501,6 +504,11 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
             //Replacing the main content with ContentFragment Which is our Inbox View;
             case R.id.sign_out:
                 Toast.makeText(getApplicationContext(), "Sign out successfully", Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(mDrawerLayout, "Sign out successfully", Snackbar.LENGTH_LONG);
+                snackbar.show();
+                SessionManager sessionManager = new SessionManager(this);
+                sessionManager.setLogin(false);
+                startActivity(new Intent(this, FundooHrLoginActivity.class));
                 /*ContentFragment fragment = new ContentFragment();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.frame,fragment);

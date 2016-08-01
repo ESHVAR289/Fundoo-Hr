@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetModule {
 
-    String mBaseUrl;
+    private String mBaseUrl;
 
     public NetModule(String mBaseUrl) {
         this.mBaseUrl = mBaseUrl;

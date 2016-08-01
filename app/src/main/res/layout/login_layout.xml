@@ -30,7 +30,8 @@
                 android:id="@+id/etMobileNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="MOBILE NUMBER"
+                android:hint="MOBILE NUMBER"
+                android:inputType="number"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -55,7 +56,8 @@
                 android:id="@+id/etLoginPswd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PASSWORD"
+                android:hint="PASSWORD"
+                android:inputType="textPassword"
                 android:textSize="15sp" />
         </LinearLayout>
 
