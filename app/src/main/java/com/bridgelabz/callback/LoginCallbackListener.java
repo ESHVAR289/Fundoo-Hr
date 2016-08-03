@@ -10,4 +10,6 @@ public interface LoginCallbackListener {
     void onFailureOtpResponse();
 
     void loginResponse();
+
+    void loginErrorResponse(String err);
 }

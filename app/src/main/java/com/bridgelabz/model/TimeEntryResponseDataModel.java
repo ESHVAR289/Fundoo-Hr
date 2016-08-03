@@ -4,10 +4,12 @@ package com.bridgelabz.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
-public class TimeEntryResponseDataModel {
+public class TimeEntryResponseDataModel implements Serializable {
 
     @SerializedName("userId")
     @Expose

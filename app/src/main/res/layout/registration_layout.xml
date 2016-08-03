@@ -3,144 +3,159 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/input_et_text"
+    android:background="@drawable/background_img"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="100dp"
-        android:background="@color/input_et_hint"
+        android:layout_marginTop="50dp"
+        android:background="@color/trans_black_50"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/mobile_no_img"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_mobile_black" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/mobile_no_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_mobile_black" />
+
                 <EditText
                     android:id="@+id/etMobileNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="MOBILE NUMBER"
-                    android:textSize="15sp"
-                    android:inputType="number" />
-        </LinearLayout>
+                    android:inputType="number"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/input_et_text"
-            android:textSize="1dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/email_id_img"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_mail_black" />
-                    <EditText
+                android:background="@color/trans_black_50"
+                android:textSize="1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/email_id_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_mail_black" />
+
+                <EditText
                     android:id="@+id/etEmailId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="EMAIL ID"
-                    android:textSize="15sp"
-                        android:inputType="textEmailAddress" />
-        </LinearLayout>
+                    android:inputType="textEmailAddress"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/input_et_text"
-            android:textSize="1dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/pswd_img"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_lock_black" />
+                android:background="@color/trans_black_50"
+                android:textSize="1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/pswd_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_lock_black" />
+
                 <EditText
                     android:id="@+id/etRegistrationPswd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="PASSWORD"
-                    android:textSize="15sp"
-                    android:inputType="textPassword" />
-        </LinearLayout>
+                    android:inputType="textPassword"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/input_et_text"
-            android:textSize="1dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/re_pswd_img"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_lock_black" />
-                    <EditText
+                android:background="@color/trans_black_50"
+                android:textSize="1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/re_pswd_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_lock_black" />
+
+                <EditText
                     android:id="@+id/etRegistrationRePswd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="RE-ENTER PASSWORD"
-                    android:textSize="15sp"
-                        android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/trans_black_50"
+                android:textSize="2dp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/pswd_format_msg"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                android:textStyle="normal|bold"
+                app:textAllCaps="false" />
         </LinearLayout>
 
-        <TextView
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/input_et_text"
-            android:textSize="2dp" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/pswd_format_msg"
-            android:textAlignment="center"
-            android:textSize="10sp"
-            android:textStyle="normal|bold"
-            app:textAllCaps="false" />
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/input_et_bg"
+            android:text="SIGN UP"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
     </LinearLayout>
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btnSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/input_et_bg"
-        android:text="SIGN UP"
-        android:textSize="15sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -174,7 +189,8 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
+
         <android.support.v7.widget.AppCompatButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"

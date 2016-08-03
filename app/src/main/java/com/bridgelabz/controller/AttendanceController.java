@@ -32,7 +32,7 @@ public class AttendanceController {
         timeEntryResponse.enqueue(new Callback<TimeEntryResponse>() {
             @Override
             public void onResponse(Call<TimeEntryResponse> call, Response<TimeEntryResponse> response) {
-                String string = response.body().toString();
+                Log.i(TAG, "onResponse:................ " + response.body().toString());
                 if (response.body() != null)
                     mTimeEntryResponseData = response.body();
                 mResponseCallbackListener.messageResponse(mTimeEntryResponseData);

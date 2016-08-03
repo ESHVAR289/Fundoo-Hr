@@ -4,7 +4,7 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background"
+    android:background="@drawable/background_img"
     android:orientation="vertical">
     <!-- This LinearLayout represents the contents of the screen  -->
     <LinearLayout
@@ -35,8 +35,7 @@
         <RelativeLayout
             android:id="@+id/txtEditDateTime"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/layout_background">
+            android:layout_height="match_parent">
 
             <Switch
                 android:id="@+id/switchEdtTimeDate"

@@ -2,22 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/input_et_text"
+    android:background="@drawable/background_img"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/logo_bridgelabz" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="100dp"
-        android:background="@color/input_et_hint"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/trans_black_50"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <ImageView
@@ -74,10 +87,9 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="10dp"
         android:text="Forget Password ?"
         android:textAlignment="center"
-        android:textColor="@color/indigo"
+        android:textColor="@color/blue"
         android:textStyle="normal|bold" />
 
     <android.support.v7.widget.AppCompatButton
@@ -87,9 +99,10 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@color/input_et_bg"
         android:text="SIGN IN"
+        android:textColor="@color/white"
         android:textSize="15sp" />
 
     <TextView
@@ -102,16 +115,17 @@
         android:layout_marginTop="10dp"
         android:text="Don't have an account. Register here !"
         android:textAlignment="center"
-        android:textColor="@color/indigo"
-        android:textSize="18sp"
+        android:textColor="@color/blue"
+        android:textSize="15sp"
         android:textStyle="normal|bold" />
+    </LinearLayout>
 
-    <TextView
+    <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:text="@string/or_registration_suggestion"
         android:textAlignment="center"
         android:textStyle="normal|bold" />
@@ -148,8 +162,5 @@
             android:drawableStart="@mipmap/ic_facebook"
             android:text="Facebook"
             android:textAlignment="textStart"
-            android:textAllCaps="false" />
-    </LinearLayout>
-
-
+            android:textAllCaps="false" />-->
 </LinearLayout>

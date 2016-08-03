@@ -299,4 +299,6 @@
     <string name="or_registration_suggestion">Or sign in with</string>
     <string name="openDrawer">Drawer Open</string>
     <string name="closeDrawer">Drawer Closed</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

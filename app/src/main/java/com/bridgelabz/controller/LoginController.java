@@ -74,13 +74,19 @@ public class LoginController {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "Login Response" + response);
+                JSONObject jsonObject = null;
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
+                    jsonObject = new JSONObject(response);
                     if (jsonObject.getString("data").equals("Successfully Login")) {
                         mLoginCallbackListener.loginResponse();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    try {
+                        mLoginCallbackListener.loginErrorResponse(jsonObject.getString("err"));
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
         }, new com.android.volley.Response.ErrorListener() {

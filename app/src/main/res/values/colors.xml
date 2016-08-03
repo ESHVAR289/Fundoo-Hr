@@ -55,7 +55,7 @@
 
     <!--new material theme-->
     <color name="layout_background">#2e3237</color>
-    <color name="input_et_bg">#3b4148</color>
+    <color name="input_et_bg">#3f7c3e</color>
     <color name="input_et_text">#888888</color>
     <color name="input_et_hint">#5e6266</color>
 </resources>

@@ -31,7 +31,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -85,10 +84,8 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
     private Button btnConfirm;
     private ListView listView;
     private View editTextView;
-    private Switch aSwitch;
     private TimeEntryResponse mTimeEntryResponse;
     private TextView txtViewEditMsg, txtMsgEmpty, txtOutTime;
-    private ArrayList<String> mCountries;
     private ArrayList<String> mMessages;
     private int mYear, mMonth, mDay, mHour, mMinute, mSeconds;
     private RecyclerView recyclerView;
@@ -157,7 +154,6 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
         etEdtOutTime = (EditText) findViewById(R.id.etEdtOutTime);
         txtOutTime = (TextView) findViewById(R.id.txtOutTime);
         btnConfirm = (Button) findViewById(R.id.btnConfirm);
-        aSwitch = (Switch) findViewById(R.id.switchEdtTimeDate);
         txtViewEditMsg = (TextView) findViewById(R.id.txtWantToEdit);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewAttendance);
 
