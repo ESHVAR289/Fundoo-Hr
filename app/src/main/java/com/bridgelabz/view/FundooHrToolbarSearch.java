@@ -42,7 +42,6 @@ import com.bridgelabz.callback.ResponseCallbackListener;
 import com.bridgelabz.controller.AttendanceController;
 import com.bridgelabz.dagger.AppController;
 import com.bridgelabz.model.AttendanceDataModel;
-import com.bridgelabz.model.ConfirmationResponse;
 import com.bridgelabz.model.TimeEntryResponse;
 import com.bridgelabz.restservice.RestApi;
 import com.bridgelabz.shared_preference.SessionManager;
@@ -468,20 +467,12 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
     }
 
     @Override
-    public void confirmationResponse(ConfirmationResponse confirmationResponse) {
-        if (confirmationResponse.getMessage().equals("update"))
-            Toast.makeText(this,"Updated successfully",Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(this,"There is some problem",Toast.LENGTH_LONG).show();
+    public void confirmationResponse(String message) {
+
     }
 
     @Override
-    public void onFailureMessageResponse(Throwable t) {
-        Toast.makeText(this, t.toString(), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onFailureOtpConfirmation() {
+    public void attendanceErrorResponse(String err) {
 
     }
 

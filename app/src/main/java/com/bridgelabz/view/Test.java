@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,14 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bridgelabz.R;
 import com.bridgelabz.callback.ResponseCallbackListener;
 import com.bridgelabz.controller.AttendanceController;
 import com.bridgelabz.dagger.AppController;
 import com.bridgelabz.fragment.AttendanceFragment;
-import com.bridgelabz.model.ConfirmationResponse;
 import com.bridgelabz.model.TimeEntryResponse;
 
 import javax.inject.Inject;
@@ -30,9 +29,10 @@ import retrofit2.Retrofit;
 public class Test extends AppCompatActivity implements ResponseCallbackListener {
     @Inject
     Retrofit retrofit;
-    EditText editText;
-    Button btnSend;
-    AttendanceController mAttendanceController;
+    private EditText editText;
+    private Button btnSend;
+    private AttendanceController mAttendanceController;
+    private LinearLayout mLinearLayout, editTextLinearLayout;
 
     private static void animateUp(View view, int height) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(view, "translationY", height, 0);
@@ -48,9 +48,10 @@ public class Test extends AppCompatActivity implements ResponseCallbackListener 
         btnSend = (Button) findViewById(R.id.btn_send);
         ((AppController) getApplication()).getmNetComponent().inject(this);
         mAttendanceController = new AttendanceController(Test.this, retrofit);
-        LinearLayout parent = (LinearLayout) findViewById(R.id.parentLinearLayout);
-        animateUp(parent, 1500);
+        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
 
+        editTextLinearLayout = (LinearLayout) findViewById(R.id.parentLinearLayout);
+        animateUp(editTextLinearLayout, 1500);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +74,6 @@ public class Test extends AppCompatActivity implements ResponseCallbackListener 
 
     private void sendEditTextDataToRest() {
         mAttendanceController.getResponseForMessage("+919923911289", editText.getText().toString());
-        //editText.setText("");
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
@@ -91,17 +91,16 @@ public class Test extends AppCompatActivity implements ResponseCallbackListener 
     }
 
     @Override
-    public void confirmationResponse(ConfirmationResponse confirmationResponse) {
-
+    public void confirmationResponse(String message) {
+        Snackbar snackbar = Snackbar
+                .make(mLinearLayout, message, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     @Override
-    public void onFailureMessageResponse(Throwable t) {
-        Toast.makeText(this, t.toString(), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onFailureOtpConfirmation() {
-
+    public void attendanceErrorResponse(String err) {
+        Snackbar snackbar = Snackbar
+                .make(mLinearLayout, err, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }

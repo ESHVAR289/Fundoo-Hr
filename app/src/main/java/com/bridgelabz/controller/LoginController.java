@@ -24,6 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import static com.bridgelabz.util.Constants.LOGIN_URL;
+import static com.bridgelabz.util.Constants.TAG_REQ;
 
 public class LoginController {
     private static String TAG = LoginController.class.getSimpleName();
@@ -68,8 +69,7 @@ public class LoginController {
     }
 
     public void checkLoginDetails(final String mo_number, final String loginPassword) {
-        //Tag to cancel the request
-        String tag_req = "req_login";
+
         StringRequest loginRequest = new StringRequest(Request.Method.POST, LOGIN_URL, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -106,6 +106,6 @@ public class LoginController {
         };
 
         //Adding the request to the request que
-        AppController.getInstance().addToRequestQueue(loginRequest, tag_req);
+        AppController.getInstance().addToRequestQueue(loginRequest, TAG_REQ);
     }
 }

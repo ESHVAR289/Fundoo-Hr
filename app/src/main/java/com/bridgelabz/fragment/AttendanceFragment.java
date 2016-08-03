@@ -22,6 +22,7 @@ public class AttendanceFragment extends Fragment {
     private AppCompatButton btnConfirm;
     private EditText etDate, etInTime, etOutTime;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,6 +34,12 @@ public class AttendanceFragment extends Fragment {
         etOutTime = (EditText) view.findViewById(R.id.etEdtOutTime);
         txtOutTime = (TextView) view.findViewById(R.id.txtOutTime);
 
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         TimeEntryResponse timeEntryResponse = (TimeEntryResponse) getArguments().getSerializable("responseData");
 
