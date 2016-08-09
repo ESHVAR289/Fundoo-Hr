@@ -31,20 +31,15 @@
             android:name=".service.HttpService"
             android:exported="false" />
 
-        <activity android:name=".view.FundooHrToolbarSearch"></activity>
+        <activity android:name=".view.FundooHrToolbarSearch" />
         <activity
             android:name=".view.RegistrationActivity"
             android:label="@string/title_activity_registration"
-            android:theme="@style/MyMaterialTheme"></activity>
+            android:theme="@style/MyMaterialTheme" />
         <activity
-            android:name=".view.MovingTest"
-            android:label="Moving"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-
-        </activity>
-        <activity android:name=".view.Test">
-
-        </activity>
+            android:name=".view.MessageSearch"
+            android:label="@string/title_activity_message_search"
+            android:theme="@style/MyMaterialTheme"></activity>
     </application>
 
 </manifest>

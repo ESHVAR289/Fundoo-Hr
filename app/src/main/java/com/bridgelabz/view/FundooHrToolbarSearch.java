@@ -36,7 +36,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bridgelabz.R;
-import com.bridgelabz.adapter.AttendaceRecyclerViewAdapter;
 import com.bridgelabz.adapter.SearchAdapter;
 import com.bridgelabz.callback.ResponseCallbackListener;
 import com.bridgelabz.controller.AttendanceController;
@@ -136,7 +135,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
         };
 
         //Setting the actionbarToggle to drawer layout
-        mDrawerLayout.setDrawerListener(actionBarDrawerToggle);
+        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
 
         //calling sync state is necessay or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
@@ -220,12 +219,12 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
                     }
                 });
                 break;*/
-                mAttendanceController.sendResponseConfirmation(mTimeEntryResponse.getTimeEntryResponseDataModel().getUserId(),
+               /* mAttendanceController.sendResponseConfirmation(mTimeEntryResponse.getTimeEntryResponseDataModel().getUserId(),
                         etEdtDate.getText().toString(),
                         etEdtInTime.getText().toString(),
                         etEdtOutTime.getText().toString(),
                         mTimeEntryResponse.getTimeEntryResponseDataModel().getTotalTime(),
-                        updateStatus);
+                        updateStatus);*/
             case R.id.txtWantToEdit:
 
                 // btnConfirm.setVisibility(View.VISIBLE);
@@ -316,9 +315,7 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
                 SharedPreference.addList(FundooHrToolbarSearch.this, Utils.PREFS_NAME, Utils.KEY_COUNTRIES, message);
                 etSearchMsg.setText(message);
                 if (etSearchMsg.getText().toString() == "give me attendance log") {
-                   /* list=getTheAttendaceLog();
-                    AttendaceRecyclerViewAdapter adapter=new AttendaceRecyclerViewAdapter(FundooHrToolbarSearch.this,list);
-                    recyclerView.setAdapter(adapter);*/
+
                 } else {
 
                 }
@@ -432,9 +429,6 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
 
                 }.getType();
                 ArrayList<AttendanceDataModel> dataModel = new Gson().fromJson(response.body(), typeToken);
-
-                AttendaceRecyclerViewAdapter adapter = new AttendaceRecyclerViewAdapter(FundooHrToolbarSearch.this, dataModel);
-                recyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -496,10 +490,6 @@ public class FundooHrToolbarSearch extends AppCompatActivity implements View.OnC
                 SessionManager sessionManager = new SessionManager(this);
                 sessionManager.setLogin(false);
                 startActivity(new Intent(this, FundooHrLoginActivity.class));
-                /*ContentFragment fragment = new ContentFragment();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame,fragment);
-                fragmentTransaction.commit();*/
                 return true;
             case R.id.about:
                 Toast.makeText(getApplicationContext(), "About clicked", Toast.LENGTH_SHORT).show();

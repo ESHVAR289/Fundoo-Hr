@@ -52,12 +52,10 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
         // Check if user is already logged in or not
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to FundooHrToolbarSearch activity
-            Intent intent = new Intent(FundooHrLoginActivity.this, Test.class);
+            Intent intent = new Intent(FundooHrLoginActivity.this, MessageSearch.class);
             startActivity(intent);
             finish();
         }
-        boolean se = session.isLoggedIn();
-
         snackBarMsg = new StringBuilder("Check your ");
         initView();
     }
@@ -211,7 +209,9 @@ public class FundooHrLoginActivity extends AppCompatActivity implements View.OnC
                 .make(mCoordinatorLayout, "Logging successful....!", Snackbar.LENGTH_LONG);
         snackbar.show();
         progressDialog.dismiss();
-        startActivity(new Intent(this, Test.class));
+        Intent intent = new Intent(this,MessageSearch.class);
+        session.setMobileNo(etMobileNo.getText().toString());
+        startActivity(intent);
     }
 
     @Override

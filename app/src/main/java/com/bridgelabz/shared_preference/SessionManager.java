@@ -9,6 +9,7 @@ public class SessionManager {
     // Shared preferences file name
     private static final String PREF_NAME = "FundooHrLogin";
     private static final String KEY_IS_LOGGEDIN = "isLoggedIn";
+    private static final String MOBILE_NO = "mobile_no";
 
     // LogCat tag
     private static String TAG = SessionManager.class.getSimpleName();
@@ -38,5 +39,15 @@ public class SessionManager {
 
     public boolean isLoggedIn() {
         return mPreference.getBoolean(KEY_IS_LOGGEDIN, false);
+    }
+
+    public String getMobileNo(){
+        return mPreference.getString(MOBILE_NO,"");
+    }
+    public void setMobileNo(String mobileNo) {
+
+        editor.putString(MOBILE_NO,mobileNo);
+        editor.commit();
+        Log.d(TAG,"Mobile number is modified !");
     }
 }

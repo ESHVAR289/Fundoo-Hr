@@ -93,6 +93,7 @@ public class LoginController {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "Registration Error" + error.toString());
+                mLoginCallbackListener.loginErrorResponse(error.toString());
             }
         }) {
             @Override

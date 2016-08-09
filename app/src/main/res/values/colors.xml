@@ -20,6 +20,8 @@
     <color name="black">#000000</color>
     <color name="chrome_grey">#F2F2F2</color>
 
+    <color name="grey_white">#c7c2c2</color>
+
 
     <color name="red">#F44336</color>
     <color name="red_google">#d34836</color>
@@ -58,4 +60,5 @@
     <color name="input_et_bg">#3f7c3e</color>
     <color name="input_et_text">#888888</color>
     <color name="input_et_hint">#5e6266</color>
+    <color name="transparent">#00000000</color>
 </resources>

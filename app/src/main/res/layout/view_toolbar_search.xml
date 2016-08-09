@@ -12,7 +12,6 @@
         android:layout_height="1.5dp"
         android:background="@color/chrome_grey"/>
 
-
     <ListView
         android:id="@+id/list_search"
         android:layout_width="match_parent"

@@ -24,7 +24,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
+                android:layout_weight="1.4"
                 android:orientation="vertical">
 
                 <TextView
@@ -42,6 +42,8 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="20dp"
                     android:background="@color/white"
+                    android:enabled="false"
+                    android:editable="false"
                     android:ems="10"
                     android:hint="@string/date"
                     android:inputType="date" />
@@ -51,7 +53,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:orientation="vertical">
 
                 <TextView
@@ -69,6 +71,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:background="@color/white"
+                    android:enabled="true"
                     android:ems="10"
                     android:hint="@string/in_time"
                     android:inputType="time" />
@@ -78,7 +81,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:orientation="vertical">
 
                 <TextView
@@ -94,6 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
+                    android:enabled="true"
                     android:layout_marginTop="20dp"
                     android:background="@color/white"
                     android:ems="10"

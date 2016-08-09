@@ -10,6 +10,9 @@ import android.widget.ListView;
 public class Utils {
     public static final String PREFS_NAME = "FUNDOO_HR";
     public static final String KEY_COUNTRIES  = "Countries";
+
+
+
     public static final int REQUEST_CODE = 1234;
 
     public static void setListViewHeightBasedOnChildren(ListView listView){

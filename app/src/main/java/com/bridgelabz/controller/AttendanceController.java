@@ -1,5 +1,6 @@
 package com.bridgelabz.controller;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -30,10 +31,15 @@ public class AttendanceController {
     private Retrofit mRetrofit;
     private TimeEntryResponse mTimeEntryResponseData;
     private ResponseCallbackListener mResponseCallbackListener;
+    private Context context;
 
     public AttendanceController(ResponseCallbackListener callbackListener, Retrofit retrofit) {
         this.mResponseCallbackListener = callbackListener;
         this.mRetrofit = retrofit;
+    }
+
+    public AttendanceController(Context context) {
+        this.mResponseCallbackListener = (ResponseCallbackListener) context;
     }
 
     public void getResponseForMessage(final String mobile_no, final String editTextMessage) {
@@ -44,6 +50,7 @@ public class AttendanceController {
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response);
+                    Log.i(TAG, "onResponse:.......... " + jsonObject.getString("data"));
                     if (new JSONObject(jsonObject.getString("data")).getString("type").equals("attendance")) {
                         mTimeEntryResponseData = new Gson().fromJson(response, TimeEntryResponse.class);
                         mResponseCallbackListener.messageResponse(mTimeEntryResponseData);
@@ -51,17 +58,36 @@ public class AttendanceController {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     try {
-                        if (jsonObject.getString("err").equals("You have already entered intime")) {
-                            mResponseCallbackListener.attendanceErrorResponse(jsonObject.getString("err"));
+                        Log.i(TAG, "onResponse:.......... " + jsonObject.getString("data"));
+                        if (jsonObject.getString("data").equals("Number not proper format")) {
+                            mResponseCallbackListener.attendanceErrorResponse(jsonObject.getString("data"));
                         }
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                         try {
+                            Log.i(TAG, "onResponse:.......... " + jsonObject.getString("data"));
                             if (jsonObject.getString("data").equals("please try again...")) {
                                 mResponseCallbackListener.attendanceErrorResponse(jsonObject.getString("data"));
                             }
                         } catch (JSONException e2) {
                             e2.printStackTrace();
+                            try {
+                                Log.i(TAG, "onResponse:.......... " + jsonObject.getString("err"));
+                                if (jsonObject.getString("err").equals("You have not entered inTime")) {
+                                    mResponseCallbackListener.attendanceErrorResponse(jsonObject.getString("err"));
+                                }
+                            } catch (JSONException e3) {
+                                e2.printStackTrace();
+                                try {
+                                    Log.i(TAG, "onResponse:.......... " + jsonObject.getString("err"));
+                                    if (jsonObject.getString("err").equals("You have already entered intime")) {
+                                        mResponseCallbackListener.attendanceErrorResponse(jsonObject.getString("err"));
+                                    }
+                                } catch (JSONException e4) {
+                                    e2.printStackTrace();
+                                    mResponseCallbackListener.attendanceErrorResponse(e4.toString());
+                                }
+                            }
                         }
                     }
                 }
@@ -86,8 +112,9 @@ public class AttendanceController {
         AppController.getInstance().addToRequestQueue(messageRequest, TAG_REQ);
     }
 
-    public void sendResponseConfirmation(final String userId, final String date, final String inTime, final String outTime, final String totalTime, final boolean updateStatus) {
-        JSONObject postRequestData = createPostJson(userId, inTime, outTime, totalTime, updateStatus);
+    public void sendResponseConfirmation(final String userId, final String inTime, final String outTime, final String totalTime, final boolean check) {
+        JSONObject postRequestData = createPostJson(userId, inTime, outTime, totalTime, check);
+        Log.i(TAG, "sendResponseConfirmation: ........."+postRequestData.toString());
         //rest call implementation using volley
         JsonObjectRequest jsonObjectRequest =
                 new JsonObjectRequest(Request.Method.POST,

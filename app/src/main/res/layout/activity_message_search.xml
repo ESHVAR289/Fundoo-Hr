@@ -2,20 +2,24 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
+    android:id="@+id/message_drawer"
     android:layout_height="match_parent"
-    android:background="@drawable/background_img"
-    android:orientation="vertical"
-    tools:context="com.bridgelabz.view.Test">
-
-    <include layout="@layout/content_test" />
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
+    android:fitsSystemWindows="true"
+    tools:context="com.bridgelabz.view.MessageSearch">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible" />
-
+        android:background="@drawable/background_img"
+        android:orientation="vertical">
+        <include layout="@layout/include_toolbar"/>
+        <include layout="@layout/content_test"/>
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
+    </LinearLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/nvView"
         android:layout_width="wrap_content"
