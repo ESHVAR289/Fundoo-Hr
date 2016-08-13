@@ -17,7 +17,6 @@ import com.bridgelabz.controller.AttendanceController;
 import com.bridgelabz.model.TimeEntryResponse;
 import com.bridgelabz.util.DateFormater;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -26,7 +25,7 @@ public class AttendanceFragment extends Fragment {
     private EditText etDate, etInTime, etOutTime;
     private AttendanceController mAttendanceController;
     private TimeEntryResponse timeEntryResponse;
-    private int mHour, mMinute;
+    private int mHour, mMinute, am_pm;
     private Calendar calendar;
     private TimePickerDialog timePickerDialog;
 
@@ -45,14 +44,11 @@ public class AttendanceFragment extends Fragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String str1=timeEntryResponse.getTimeEntryResponseDataModel().getUserId();
-                String str2=DateFormater.serverSendDate(etDate.getText().toString().trim(),etInTime.getText().toString().trim());
-                String str3=etOutTime.getText().toString();
-                String  str4=timeEntryResponse.getTimeEntryResponseDataModel().getTotalTime();
                 mAttendanceController
                         .sendResponseConfirmation(timeEntryResponse.getTimeEntryResponseDataModel().getUserId(),
-                        DateFormater.serverSendDate(etDate.getText().toString().trim(),etInTime.getText().toString().trim()),
-                        etOutTime.getText().toString(),
+                                DateFormater.serverSendDate(etDate.getText().toString().trim(),
+                                        etInTime.getText().toString().trim()),
+                                etOutTime.getText().toString().trim(),
                         timeEntryResponse.getTimeEntryResponseDataModel().getTotalTime(),
                         true);
             }
@@ -64,13 +60,14 @@ public class AttendanceFragment extends Fragment {
                 calendar = Calendar.getInstance();
                 mHour = calendar.get(Calendar.HOUR_OF_DAY);
                 mMinute = calendar.get(Calendar.MINUTE);
+                am_pm = calendar.get(Calendar.AM_PM);
                 // Launch Time Picker Dialog
                 timePickerDialog = new TimePickerDialog(getActivity(),
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
-                                etInTime.setText(hourOfDay + ":" + minute);
+                                etInTime.setText(hourOfDay + ":" + minute + " " + am_pm);
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
@@ -88,7 +85,7 @@ public class AttendanceFragment extends Fragment {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
-                                etOutTime.setText(hourOfDay + ":" + minute);
+                                etOutTime.setText(hourOfDay + ":" + minute + " " + am_pm);
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
